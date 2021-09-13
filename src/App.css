@@ -1,0 +1,52 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #1a1b1d;
+  min-height: 15vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #DCE1E5;
+}
+
+.Point-bank{
+  background-color: #DCE1E5;
+  min-height: 10vh;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  text-align: center;
+}
+
+.Main-table{
+
+  background-color: #8B969C;
+  min-height: 30vh;
+  display: flex;
+
+  width: 100%;
+
+  text-align: center;
+  font-size: calc(10px + 2vmin);
+  color: #DCE1E5;
+}
+
+.Stat{
+  width: calc(100%/6);
+  display: inline-block;
+  vertical-align: top;
+  
+  margin: 1%;
+  padding: 1%;
+
+
+  background-color: #AD1D1A;
+}
