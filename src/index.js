@@ -7,11 +7,14 @@ import {createTheme, ThemeProvider} from '@material-ui/core/styles';
 
 const theme = createTheme({
   "palette": {
-    "primary1Color": "#D90429",
-    "primary2Color": "#616161",
-    "accent1Color": "#b71c1c",
-    "accent2Color": "#E7EAEE",
-    "accent3Color": "#bdbdbd"
+    primary:{
+      main: "#212529",
+    },
+    "primary1Color": "#495057",
+    "primary2Color": "#6c757d",
+    "accent1Color": "#adb5bd",
+    "accent2Color": "#dee2e6",
+    "accent3Color": "#212529"
   }
 });
 

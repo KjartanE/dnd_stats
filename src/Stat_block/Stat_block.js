@@ -5,26 +5,27 @@ import {Box, Button, ButtonGroup} from '@material-ui/core';
 
 const styles = theme =>({
     stat:{
-        background: "#282A3E",
+        background: theme.palette.primary1Color,
         spaceing: 16,
         border: 0,
-        fontSize: 18,
+        fontSize: 20,
         borderRadius: 3,
         color: 'white',
         height: 132,
-        padding: '10px 20px ',
+        padding: '12px 24px ',
         textAlign: 'center',
         margin: '5px',
-        boxShadow: '0 3px 5px 2px #1F2D33'
+        boxShadow: '0 2px 3px 1px #1F2D33',
+        maxWidth: '120px',
     },
     score:{
         background: theme.palette.primary2Color,
         border: 0,
-        fontSize: 18,
+        fontSize: 24,
         borderRadius: 100,
         color: 'white',
         height: 20,
-        padding: '5px 5px ',
+        paddingBottom: '8px ',
         textAlign: 'center',
         margin: '5px',
 
@@ -40,10 +41,6 @@ class Stat_block extends React.Component{
             stat : 8,
             score : -1
         };
-    }
-
-    componentDidMount(){
-        window.addEventListener("onClick", this.modActer);
     }
 
     modActer = (val) =>{
@@ -143,14 +140,12 @@ class Stat_block extends React.Component{
 
         return (    
         <Box width="20" className={classes.stat}>
-            {this.props.stat}
+            {(this.props.stat).toUpperCase()}
             <br/>
             <ButtonGroup size="small" color="primary" variant="contained">
                 <Button type="button" onClick={this.decreasePoints}>-</Button> 
                 <Button type="button" onClick={this.increasePoints}>+</Button>
-
             </ButtonGroup>
-
             <br/>
             Points: {this.props.appState.stats[this.props.stat]}
             <br/>
