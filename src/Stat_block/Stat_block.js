@@ -43,55 +43,51 @@ class Stat_block extends React.Component{
         };
     }
 
-    modActer = (val) =>{
-        this.modCalc(this.props.appState.stats[this.props.stat] +val);
-    }
-
     modCalc = (val) =>{
         
         switch (val) {
             case 1:
-                this.setState({score: -5 });
+                return(-5);
                 break;
             case 2:
             case 3:
-                this.setState({score: -4 });
+                return(-4);
                 break;
             case 4:
             case 5:
-                this.setState({score: -3 });
+                return(-3);
                 break;
             case 6:
             case 7:
-                this.setState({score: -2 });
+                return(-2);
                 break;
             case 8:
             case 9:
-                this.setState({score: -1 });
+                return(-1);
                 break;
             case 10:
             case 11:          
-                this.setState({score: 0 });
+                return(0);
                 break;
             case 12:
             case 13:
-                this.setState({score: 1 });
+                return(1);
                 break;    
             case 14:
             case 15:
-                this.setState({score: 2 });
+                return(2);
                 break;
             case 16:
             case 17:
-                this.setState({score: 3 });
+                return(3);
                 break;
             case 18:
             case 19:
-                this.setState({score: 4 });
+                return(4);
                 break;
             case 20:
             case 21:
-                this.setState({score: 5 });                
+                return(5);               
                 break;
             default:
                 break;
@@ -99,38 +95,50 @@ class Stat_block extends React.Component{
         return;
     }
     
+    adjustStat = (val) => {
+        this.setState((state) => ({
+            stat: state.stat + val,
+            score: this.modCalc(state.stat + val)
+        }));
+    }
+
     decreasePoints = () =>{
         if(this.state.stat >0){
             if(this.state.stat >13){
-                this.props.appState.increase_Points(2);
+                this.props.appState.adjustPoints(2);
             }else{
-                this.props.appState.increase_Points(1);
+                this.props.appState.adjustPoints(1);
             }
 
-            this.props.appState.update_Stat(this.props.stat, -1);
-            //this.setState({stat: this.props.appState.stats.str -1});
-            this.modCalc(this.props.appState.stats[this.props.stat] -1);    
+            this.setState((state) => ({
+                stat: state.stat -1,
+                score: this.modCalc(state.stat -1 )
+            })); 
         }else{
             alert("To Few Points Left!");
         }
     }
 
     increasePoints = () =>{
-        if(this.state.stat+ 1>13){
+        if((this.state.stat+ 1)>13){
             if(this.props.appState.points > 1){
-                this.props.appState.decrease_Points(2); 
-                this.props.appState.update_Stat(this.props.stat, +1);  
-                this.modCalc(this.props.appState.stats[this.props.stat] +1);              
+                this.props.appState.adjustPoints(-2); 
+                this.setState((state) => ({
+                    stat: state.stat + 1,
+                    score: this.modCalc(state.stat + 1)
+                }));            
             }else{
                 alert("Not Enough Points!");
             }
         }else{
             if(this.props.appState.points > 0){
-                this.props.appState.decrease_Points(1);            
-                this.props.appState.update_Stat(this.props.stat, +1);
-                this.modCalc(this.props.appState.stats[this.props.stat] +1);  
+                this.props.appState.adjustPoints(-1);            
+                this.setState((state) => ({
+                    stat: state.stat + 1,
+                    score: this.modCalc(state.stat + 1)
+                }));
             }else{
-                alert("Not Enough Points!");
+                alert("Notasd Enough Points!");
             }
         }
     }
@@ -143,11 +151,11 @@ class Stat_block extends React.Component{
             {(this.props.stat).toUpperCase()}
             <br/>
             <ButtonGroup size="small" color="primary" variant="contained">
-                <Button type="button" onClick={this.decreasePoints}>-</Button> 
-                <Button type="button" onClick={this.increasePoints}>+</Button>
+                <Button type="button" onClick={() =>this.decreasePoints()}>-</Button> 
+                <Button type="button" onClick={() =>this.increasePoints()}>+</Button>
             </ButtonGroup>
             <br/>
-            Points: {this.props.appState.stats[this.props.stat]}
+            Points: {this.state.stat}
             <br/>
             Score: 
             <Box className={classes.score}>
