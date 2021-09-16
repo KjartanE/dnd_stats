@@ -3,6 +3,7 @@ import { withStyles, makeStyles } from "@material-ui/core/styles";
 
 import {Box, FormControl, FormLabel, FormGroup, FormControlLabel,
         Checkbox, FormHelperText, Grid } from '@material-ui/core';
+import { getThemeProps } from "@material-ui/styles";
 
 const style = makeStyles((theme) => ({
     root: {
@@ -28,9 +29,20 @@ class Skill_block extends React.Component{
         super(props);
         
         this.state = {
+            score:{
+                str: -1,
+                dex: -1,
+                con: -1,
+                int: -1,
+                wis: -1,
+                cha: -1
+            },
             prof: 2,
-            access_Stats: this.access_Stats,
+            prof_bonus: 2,
+            access_Score: this.access_Score,
             adjust_Prof: this.adjust_Prof,
+            update_Score: this.update_Score,
+            warning_Alert: this.props.appState.warning_Alert
         }
     }
 
@@ -41,8 +53,24 @@ class Skill_block extends React.Component{
         //console.log(JSON.stringify(this.state));
     }
 
-    access_Stats = () => {
-        this.props.appState.access_stat_score();
+    update_Score = () =>{
+
+        this.setState((state) => ({
+            score:{
+                str: this.access_Score('str'),
+                dex: this.access_Score('dex'),
+                con: this.access_Score('con'),
+                int: this.access_Score('int'),
+                wis: this.access_Score('wis'),
+                cha: this.access_Score('cha')
+            }
+        })); 
+
+        console.log(JSON.stringify(this.state));
+    }
+
+    access_Score = (dir) => {
+        return(this.props.appState.access_Stat_Score(dir));
     }
 
     render(){
@@ -61,6 +89,21 @@ export function CheckboxesGroup(props) {
         acro: false,
         anim: false,
         arca: false,
+        athl: false,
+        dece: false,
+        hist: false,
+        insi: false,
+        inti: false,
+        inve: false,
+        medi: false,
+        natu: false,
+        perc: false,
+        perf: false,
+        pers: false,
+        reli: false,
+        slei: false,
+        stea: false,
+        surv: false,
     });
 
     const handleChange = (event) => {
@@ -69,84 +112,227 @@ export function CheckboxesGroup(props) {
             props.state.adjust_Prof(1);
         }else{
             if(props.state.prof <= 0){
-                alert("not enough prof points");
+                props.state.warning_Alert("not enough prof points");
             }else{
                 setState({ ...state, [event.target.name]: event.target.checked });
                 props.state.adjust_Prof(-1);
             }
         }
+        props.state.update_Score();
         
     };
-    const { acro, anim, arca } = state;
+    const { acro, anim, arca, athl, dece, hist, 
+            insi, inti, inve, medi, natu, perc, 
+            perf, pers, reli, slei, stea, surv
+        } = state;
 
 
     return (
       <Box component="div" className={classes.skillbox}>
         <FormControl component="fieldset" className={classes.skillbar}>
-          <FormLabel component="legend">Select Skills:</FormLabel>
+          <FormLabel component="legend">
+            Select Skills: {props.state.prof}
+          </FormLabel>
           <FormGroup>
             <Box component="div" className={classes.skillbar}>
-              <Grid
-                container
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Grid item>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={acro}
-                        onChange={handleChange}
-                        name="acro"
-                      />
-                    }
-                    label="Acrobatics (Dex)"
-                  />
-                </Grid>
-                <Grid item className={classes.mod}>
-                  <FormLabel component="modifer">
-                    {() => {props.state.access_Stats()}}
-                  </FormLabel>
-                </Grid>
-              </Grid>
+              <StatGrid
+                name="acro"
+                label="Acrobatics (Dex)"
+                dir="dex"
+                handleChange={handleChange}
+                stat_state={acro}
+                skill_state={props.state}
+              />
 
-              <Grid
-                container
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-                
-              >
-                <Grid item>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={anim}
-                        onChange={handleChange}
-                        name="anim"
-                      />
-                    }
-                    label="Animal Handling (Wis)"
-                  />
-                </Grid>
-                <Grid item className={classes.mod}>
-                  <FormLabel component="modifer">
-                    {[props.state.prof]}
-                  </FormLabel>
-                </Grid>
-              </Grid>
+              <StatGrid
+                name="anim"
+                label="Animal Handling (Wis)"
+                dir="wis"
+                handleChange={handleChange}
+                stat_state={anim}
+                skill_state={props.state}
+              />
+
+              <StatGrid
+                name="arca"
+                label="Arcana (Int)"
+                dir="int"
+                handleChange={handleChange}
+                stat_state={arca}
+                skill_state={props.state}
+              />
+
+              <StatGrid
+                name="athl"
+                label="Athletics (Str)"
+                dir="str"
+                handleChange={handleChange}
+                stat_state={athl}
+                skill_state={props.state}
+              />
+
+            <StatGrid
+                name="dece"
+                label="Deception (Cha)"
+                dir="cha"
+                handleChange={handleChange}
+                stat_state={dece}
+                skill_state={props.state}
+              />
+
+            <StatGrid
+                name="hist"
+                label="History (Int)"
+                dir="int"
+                handleChange={handleChange}
+                stat_state={hist}
+                skill_state={props.state}
+              />
+
+            <StatGrid
+                name="insi"
+                label="Insight (Wis)"
+                dir="wis"
+                handleChange={handleChange}
+                stat_state={insi}
+                skill_state={props.state}
+              />
+
+            <StatGrid
+                name="inti"
+                label="Intimidation (Cha)"
+                dir="cha"
+                handleChange={handleChange}
+                stat_state={inti}
+                skill_state={props.state}
+              />
+
+            <StatGrid
+                name="inve"
+                label="Investigation (Int)"
+                dir="int"
+                handleChange={handleChange}
+                stat_state={inve}
+                skill_state={props.state}
+              />  
+              
+            <StatGrid
+                name="medi"
+                label="Medicine (Wis)"
+                dir="wis"
+                handleChange={handleChange}
+                stat_state={medi}
+                skill_state={props.state}
+              />
+              
+            <StatGrid
+                name="natu"
+                label="Nature (Int)"
+                dir="int"
+                handleChange={handleChange}
+                stat_state={natu}
+                skill_state={props.state}
+              />
+              
+            <StatGrid
+                name="perc"
+                label="Perception (Wis)"
+                dir="wis"
+                handleChange={handleChange}
+                stat_state={perc}
+                skill_state={props.state}
+              />
+              
+            <StatGrid
+                name="perf"
+                label="Performance (Cha)"
+                dir="cha"
+                handleChange={handleChange}
+                stat_state={perf}
+                skill_state={props.state}
+              />
+              
+            <StatGrid
+                name="pers"
+                label="Persuasion (Cha)"
+                dir="cha"
+                handleChange={handleChange}
+                stat_state={pers}
+                skill_state={props.state}
+              />
+              
+            <StatGrid
+                name="reli"
+                label="Religion (Int)"
+                dir="int"
+                handleChange={handleChange}
+                stat_state={reli}
+                skill_state={props.state}
+              />
+              
+            <StatGrid
+                name="slei"
+                label="Sleight of Hand (Dex)"
+                dir="dex"
+                handleChange={handleChange}
+                stat_state={slei}
+                skill_state={props.state}
+              />
+              
+            <StatGrid
+                name="stea"
+                label="Stealth (Dex)"
+                dir="dex"
+                handleChange={handleChange}
+                stat_state={stea}
+                skill_state={props.state}
+              />
+                            
+            <StatGrid
+                name="surv"
+                label="Survival (Wis)"
+                dir="wis"
+                handleChange={handleChange}
+                stat_state={surv}
+                skill_state={props.state}
+              />
+
             </Box>
-
-            <FormControlLabel
-              control={
-                <Checkbox checked={arca} onChange={handleChange} name="arca" />
-              }
-              label="Arcana (Int)"
-            />
           </FormGroup>
           <FormHelperText>Be careful</FormHelperText>
         </FormControl>
       </Box>
+    );
+}
+
+export function StatGrid(props) {
+
+    return (
+      <Grid
+        container
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Grid item>
+          <FormControlLabel
+            control={
+              <Checkbox 
+                checked={props.stat_state} 
+                onChange={props.handleChange} 
+                name={props.name}
+                />
+            }
+            label={props.label}
+          />
+        </Grid>
+        <Grid item >
+          <FormLabel component="modifer">
+            {props.stat_state === true
+              ? props.skill_state.score[props.dir] + props.skill_state.prof_bonus
+              : props.skill_state.score[props.dir]}
+          </FormLabel>
+        </Grid>
+      </Grid>
     );
 }

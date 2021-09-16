@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 import Stat_block from './Stat_block/Stat_block';
 import Skill_block from './Skill_block/Skill_block';
 import Race_block from './Race_block/Race_block.js';
+import Alert_Component from './Utilities/Alert_Component.js';
+
 import { withStyles } from '@material-ui/core/styles';
 import { Box, Button, Container, Grid, Accordion } from '@material-ui/core';
 
@@ -58,9 +60,11 @@ class App extends Component{
         val2: 0
       },
       adjust_Points:this.adjust_Points,
-      update_Stats:this.update_Stats,
       variant_Human: this.variant_Human,
+      update_Stats:this.update_Stats,
+      update_Skill_Score: this.update_Skill_Score,
       access_Stat_Score: this.access_Stat_Score,
+      warning_Alert: this.warning_Alert
     };
 
     this.str = React.createRef();
@@ -70,9 +74,15 @@ class App extends Component{
     this.wis = React.createRef();
     this.cha = React.createRef();
 
+    this.skills = React.createRef();
+    this.alert = React.createRef();
   }
 
-  
+  adjust_Points = (val) =>{
+    this.setState((state) =>({
+      points : state.points +val
+    }));
+  }
 
   variant_Human = (selection) =>{
     var curRace ={...this.state.race_selection};
@@ -88,7 +98,7 @@ class App extends Component{
       this.setState({race_selection: curRace});
     }
 
-    if(selection ==="base" && curRace.human != "base"){
+    if(selection ==="base" && curRace.human !== "base"){
       if(curRace.human === 'variant'){
         this.variant_Human("!variant");
       }
@@ -103,7 +113,7 @@ class App extends Component{
       curRace.human = "base";
       this.setState({race_selection: curRace});
 
-    }else if(selection === "variant" && curRace.human != "variant"){
+    }else if(selection === "variant" && curRace.human !== "variant"){
 
       if(curRace.human === 'base'){
         this.str.current.adjustStat(-1);
@@ -123,6 +133,7 @@ class App extends Component{
       this.setState({race_selection: curRace});
       this.adjust_Points(-2);
     }
+    this.update_Skill_Score();
   }
 
   update_Stats = (dir1, val1, dir2, val2) =>{
@@ -161,19 +172,23 @@ class App extends Component{
     curRace.val1 = val1;
     curRace.val2 = val2;
     this.setState({race_selection: curRace});
+    this.update_Skill_Score();
     //console.log(JSON.stringify(this.state));
   } 
 
-  adjust_Points = (val) =>{
-    this.setState((state) =>({
-      points : state.points +val
-    }));
+  update_Skill_Score = () => {
+    this.skills.current.update_Score();
   }
 
-  access_Stat_Score = () => {
-    const stat_element = this.str.current;
+  access_Stat_Score = (dir) => {
+    const stat_element = this[dir].current;
     
-    console.log('GU');
+    return(stat_element.accessScore());
+    //console.log(stat_element.state.score);
+  }
+
+  warning_Alert = (info) => {
+    this.alert.current.alert_On(info);
   }
 
   render() {
@@ -206,7 +221,7 @@ class App extends Component{
             <Box className={`${classes.root} ${classes.sub_head}`}>      
               <h2>Skills:</h2>
             </Box>
-            <Skill_block appState={this.state}/>
+            <Skill_block appState={this.state} ref={this.skills}/>
             
           </Grid>
           <Grid item className={classes.raceSection}>
@@ -216,9 +231,9 @@ class App extends Component{
             <Race_block appState={this.state}/>
 
           </Grid>
-  
-        </Grid>
         
+        </Grid>
+        <Alert_Component ref={this.alert}/>
       </Container>
     );
   }  

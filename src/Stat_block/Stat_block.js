@@ -116,13 +116,13 @@ class Stat_block extends React.Component{
             })); 
             this.props.appState.update_Skill_Score();
         }else{
-            alert("To Few Points Left!");
+            this.props.appState.warning_Alert("To Few Points Left!");
         }
     }
 
     increasePoints = () =>{
         if(this.state.points_added >= 7){
-            alert("Maximum Bonus Reached!");
+            this.props.appState.warning_Alert("Maximum Bonus Reached!");            
         }else if((this.state.stat+ 1)>13){
             if(this.props.appState.points > 1){
                 this.props.appState.adjust_Points(-2); 
@@ -133,7 +133,7 @@ class Stat_block extends React.Component{
                 }));            
                 this.props.appState.update_Skill_Score();
             }else{
-                alert("Not Enough Points!");
+                this.props.appState.warning_Alert("Not Enough Points!");
             }
         }else{
             if(this.props.appState.points > 0){
@@ -145,7 +145,7 @@ class Stat_block extends React.Component{
                 }));
                 this.props.appState.update_Skill_Score();
             }else{
-                alert("Not Enough Points!");
+                this.props.appState.warning_Alert("Not Enough Points!");
             }
         }
     }
