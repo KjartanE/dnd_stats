@@ -11,13 +11,14 @@ import Elf from './Races/Elf.js';
 import Halfling from './Races/Halfling.js';
 import Human  from './Races/Human.js';
 import Dragonborn  from './Races/Dragonborn.js';
+import Gnome  from './Races/Gnome.js';
 
 const style = makeStyles({
   root: {
-    width: "70%",
+    width: "100%",
 
     backgroundColor: "green",
-    margin: "12px",
+    marginTop: "12px",
   },
 });
 
@@ -153,6 +154,18 @@ export function CustomizedAccordions(props) {
         </AccordionSummary>
         <AccordionDetails>
             <Dragonborn updateStats={props.updateStats}/>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion
+        square
+        expanded={expanded === "panel6"}
+        onChange={handleChange("panel6")}
+      >
+        <AccordionSummary aria-controls="panel6d-content" id="panel6d-header">
+          <Typography>Gnome</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+            <Gnome updateStats={props.updateStats}/>
         </AccordionDetails>
       </Accordion>
     </Box>

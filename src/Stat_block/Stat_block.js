@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
-import {Box, Button, ButtonGroup} from '@material-ui/core';
+import {Box, Button, ButtonGroup, Paper} from '@material-ui/core';
 
 const styles = theme =>({
     stat:{
@@ -14,9 +14,11 @@ const styles = theme =>({
         height: 132,
         padding: '12px 24px ',
         textAlign: 'center',
-        margin: '5px',
-        boxShadow: '0 2px 3px 1px #1F2D33',
+        margin: 'auto',
+        marginTop:'2.5%',
+        
         maxWidth: '120px',
+        
     },
     score:{
         background: theme.palette.primary2Color,
@@ -39,56 +41,51 @@ class Stat_block extends React.Component{
         
         this.state={
             stat : 8,
-            score : -1
+            score : -1,
+            points_added: 0,
         };
     }
+
+    accessScore = () => {
+        var data = this.state.score;
+        return(data);
+    } 
 
     modCalc = (val) =>{
         
         switch (val) {
             case 1:
                 return(-5);
-                break;
             case 2:
             case 3:
                 return(-4);
-                break;
             case 4:
             case 5:
                 return(-3);
-                break;
             case 6:
             case 7:
                 return(-2);
-                break;
             case 8:
             case 9:
                 return(-1);
-                break;
             case 10:
             case 11:          
                 return(0);
-                break;
             case 12:
             case 13:
                 return(1);
-                break;    
             case 14:
             case 15:
                 return(2);
-                break;
             case 16:
             case 17:
                 return(3);
-                break;
             case 18:
             case 19:
                 return(4);
-                break;
             case 20:
             case 21:
                 return(5);               
-                break;
             default:
                 break;
         }
@@ -105,14 +102,15 @@ class Stat_block extends React.Component{
     decreasePoints = () =>{
         if(this.state.stat >0){
             if(this.state.stat >13){
-                this.props.appState.adjustPoints(2);
+                this.props.appState.adjust_Points(2);
             }else{
-                this.props.appState.adjustPoints(1);
+                this.props.appState.adjust_Points(1);
             }
 
             this.setState((state) => ({
                 stat: state.stat -1,
-                score: this.modCalc(state.stat -1 )
+                score: this.modCalc(state.stat -1),
+                points_added: state.points_added -1,
             })); 
         }else{
             alert("To Few Points Left!");
@@ -120,25 +118,29 @@ class Stat_block extends React.Component{
     }
 
     increasePoints = () =>{
-        if((this.state.stat+ 1)>13){
+        if(this.state.points_added >= 7){
+            alert("Maximum Bonus Reached!");
+        }else if((this.state.stat+ 1)>13){
             if(this.props.appState.points > 1){
-                this.props.appState.adjustPoints(-2); 
+                this.props.appState.adjust_Points(-2); 
                 this.setState((state) => ({
                     stat: state.stat + 1,
-                    score: this.modCalc(state.stat + 1)
+                    score: this.modCalc(state.stat + 1),
+                    points_added: state.points_added +1
                 }));            
             }else{
                 alert("Not Enough Points!");
             }
         }else{
             if(this.props.appState.points > 0){
-                this.props.appState.adjustPoints(-1);            
+                this.props.appState.adjust_Points(-1);            
                 this.setState((state) => ({
                     stat: state.stat + 1,
-                    score: this.modCalc(state.stat + 1)
+                    score: this.modCalc(state.stat + 1),
+                    points_added: state.points_added +1
                 }));
             }else{
-                alert("Notasd Enough Points!");
+                alert("Not Enough Points!");
             }
         }
     }
@@ -147,7 +149,7 @@ class Stat_block extends React.Component{
         const { classes } = this.props;
 
         return (    
-        <Box width="20" className={classes.stat}>
+        <Paper elevation={3} className={classes.stat}>
             {(this.props.stat).toUpperCase()}
             <br/>
             <ButtonGroup size="small" color="primary" variant="contained">
@@ -162,7 +164,7 @@ class Stat_block extends React.Component{
                 {this.state.score}
             </Box>
 
-        </Box>      
+        </Paper>      
         );
         
     }

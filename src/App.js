@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 //import './App.css';
 import Stat_block from './Stat_block/Stat_block';
+import Skill_block from './Skill_block/Skill_block';
 import Race_block from './Race_block/Race_block.js';
 import { withStyles } from '@material-ui/core/styles';
 import { Box, Button, Container, Grid, Accordion } from '@material-ui/core';
@@ -26,8 +27,18 @@ const styles = theme => ({
     backgroundColor: theme.palette.primary2Color,
     fontSize: 14,
     height: 60,
-    padding: '0px 10px',
-    maxWidth: '120px',
+    width:'100%',
+  },
+  statSection:{
+  },
+  statColumn:{
+    width:"12%",
+  },
+  skillSection:{
+    width:"20%"
+  },
+  raceSection:{
+    width: "68%"
   }
   
 });
@@ -35,6 +46,7 @@ const styles = theme => ({
 class App extends Component{
   constructor(){
     super();
+    
     this.state={
       points : 27,
       race_selection:{
@@ -45,9 +57,10 @@ class App extends Component{
         val1: 0,
         val2: 0
       },
-      adjustPoints:this.adjustPoints,
+      adjust_Points:this.adjust_Points,
       update_Stats:this.update_Stats,
       variant_Human: this.variant_Human,
+      access_Stat_Score: this.access_Stat_Score,
     };
 
     this.str = React.createRef();
@@ -58,6 +71,8 @@ class App extends Component{
     this.cha = React.createRef();
 
   }
+
+  
 
   variant_Human = (selection) =>{
     var curRace ={...this.state.race_selection};
@@ -101,12 +116,12 @@ class App extends Component{
 
       curRace.human = "variant";
       this.setState({race_selection: curRace});
-      this.adjustPoints(2);
+      this.adjust_Points(2);
     }else if(selection ==="!variant"){
       curRace.human = "";
       
       this.setState({race_selection: curRace});
-      this.adjustPoints(-2);
+      this.adjust_Points(-2);
     }
   }
 
@@ -123,7 +138,7 @@ class App extends Component{
       curRace.human = '';
       this.setState({race_selection: curRace});
     }else if(curRace.human === 'variant'){
-      this.adjustPoints(-2);
+      this.adjust_Points(-2);
       curRace.human = '';
       this.setState({race_selection: curRace});
     }
@@ -149,10 +164,16 @@ class App extends Component{
     //console.log(JSON.stringify(this.state));
   } 
 
-  adjustPoints = (val) =>{
+  adjust_Points = (val) =>{
     this.setState((state) =>({
       points : state.points +val
     }));
+  }
+
+  access_Stat_Score = () => {
+    const stat_element = this.str.current;
+    
+    console.log('GU');
   }
 
   render() {
@@ -167,30 +188,35 @@ class App extends Component{
         <br/>
         <Grid container direction="row" spacing={3} justifyContent="flex-start" alignItems="flex-start">
           
-          <Grid item className="Main-table">
+          <Grid item className={classes.statColumn}>
             <Box className={`${classes.root} ${classes.sub_head}`}>      
-                <h2>Total Points: {this.state.points}</h2>
+              <h2>Stat Points: {this.state.points}</h2>
             </Box>
-            
-            <Stat_block stat="str" appState={this.state} ref={this.str}/>
-            <Stat_block stat="dex" appState={this.state} ref={this.dex}/>
-            <Stat_block stat="con" appState={this.state} ref={this.con}/>
-            <Stat_block stat="int" appState={this.state} ref={this.int}/>
-            <Stat_block stat="wis" appState={this.state} ref={this.wis}/>
-            <Stat_block stat="cha" appState={this.state} ref={this.cha}/>
+            <Box component='div' className={classes.statSection}>
+              <Stat_block stat="str" appState={this.state} ref={this.str}/>
+              <Stat_block stat="dex" appState={this.state} ref={this.dex}/>
+              <Stat_block stat="con" appState={this.state} ref={this.con}/>
+              <Stat_block stat="int" appState={this.state} ref={this.int}/>
+              <Stat_block stat="wis" appState={this.state} ref={this.wis}/>
+              <Stat_block stat="cha" appState={this.state} ref={this.cha}/>
+            </Box>
           </Grid>
           
-          <Grid item >
-            <Box className={classes.root}>
-              <Box className={classes.sub_head}>
-                <h2>Races: </h2>
-              </Box>
+          <Grid item className={classes.skillSection}>
+            <Box className={`${classes.root} ${classes.sub_head}`}>      
+              <h2>Skills:</h2>
             </Box>
+            <Skill_block appState={this.state}/>
             
           </Grid>
+          <Grid item className={classes.raceSection}>
+            <Box className={`${classes.root} ${classes.sub_head}`}>
+              <h2>Races: </h2> 
+            </Box>
+            <Race_block appState={this.state}/>
 
-          <Race_block appState={this.state}/>
-            
+          </Grid>
+  
         </Grid>
         
       </Container>
