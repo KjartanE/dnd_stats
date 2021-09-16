@@ -34,16 +34,13 @@ const style = makeStyles({
 });
 
 class Dragonborn extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
-    return <Dragonborn_block updateStats={this.props.updateStats} />;
+    return <DragonbornBlock updateStats={this.props.updateStats} />;
   }
 }
 export default Dragonborn;
 
-export function Dragonborn_block(props) {
+export function DragonbornBlock(props) {
   const classes = style();
   const [dragon, setDragon] = useState('');
 

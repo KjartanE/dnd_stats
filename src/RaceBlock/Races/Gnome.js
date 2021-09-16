@@ -30,13 +30,13 @@ const style = makeStyles({
 class Gnome extends React.Component {
     render() {
         return(
-            <Gnome_block updateStats={this.props.updateStats} />
+            <GnomeBlock updateStats={this.props.updateStats} />
         );
     }
 }
 export default Gnome;
 
-export function Gnome_block(props){
+export function GnomeBlock(props){
     const classes = style();
     const [gnome, setGnome] = useState('');
 

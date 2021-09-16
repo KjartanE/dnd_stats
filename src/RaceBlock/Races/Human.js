@@ -26,16 +26,13 @@ const style = makeStyles({
 });
 
 class Human extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
-    return <Human_block variantHuman={this.props.variantHuman} />;
+    return <HumanBlock variantHuman={this.props.variantHuman} />;
   }
 }
 export default Human;
 
-export function Human_block(props) {
+export function HumanBlock(props) {
   const classes = style();
   const [human, setHuman] = useState('');
 

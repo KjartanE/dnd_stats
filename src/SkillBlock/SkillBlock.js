@@ -1,9 +1,7 @@
-import React, { useState } from "react"; 
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-
+import React from "react"; 
+import { makeStyles } from "@material-ui/core/styles";
 import {Box, FormControl, FormLabel, FormGroup, FormControlLabel,
         Checkbox, FormHelperText, Grid } from '@material-ui/core';
-import { getThemeProps } from "@material-ui/styles";
 
 const style = makeStyles((theme) => ({
     root: {
@@ -23,7 +21,7 @@ const style = makeStyles((theme) => ({
       
   }));
 
-class Skill_block extends React.Component{
+class SkillBlock extends React.Component{
     
     constructor(props){
         super(props);
@@ -80,7 +78,7 @@ class Skill_block extends React.Component{
     }
 }
 
-export default Skill_block;
+export default SkillBlock;
 
 export function CheckboxesGroup(props) {
     const classes = style();
