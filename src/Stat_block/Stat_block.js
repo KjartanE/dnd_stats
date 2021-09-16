@@ -44,7 +44,9 @@ class Stat_block extends React.Component{
             score : -1,
             points_added: 0,
         };
+        
     }
+    
 
     accessScore = () => {
         var data = this.state.score;
@@ -100,7 +102,7 @@ class Stat_block extends React.Component{
     }
 
     decreasePoints = () =>{
-        if(this.state.stat >0){
+        if(this.state.points_added >0){
             if(this.state.stat >13){
                 this.props.appState.adjust_Points(2);
             }else{
@@ -112,6 +114,7 @@ class Stat_block extends React.Component{
                 score: this.modCalc(state.stat -1),
                 points_added: state.points_added -1,
             })); 
+            this.props.appState.update_Skill_Score();
         }else{
             alert("To Few Points Left!");
         }
@@ -128,6 +131,7 @@ class Stat_block extends React.Component{
                     score: this.modCalc(state.stat + 1),
                     points_added: state.points_added +1
                 }));            
+                this.props.appState.update_Skill_Score();
             }else{
                 alert("Not Enough Points!");
             }
@@ -139,6 +143,7 @@ class Stat_block extends React.Component{
                     score: this.modCalc(state.stat + 1),
                     points_added: state.points_added +1
                 }));
+                this.props.appState.update_Skill_Score();
             }else{
                 alert("Not Enough Points!");
             }
@@ -147,6 +152,7 @@ class Stat_block extends React.Component{
 
     render () {
         const { classes } = this.props;
+        
 
         return (    
         <Paper elevation={3} className={classes.stat}>
@@ -171,3 +177,4 @@ class Stat_block extends React.Component{
 
 }
 export default withStyles(styles, {withTheme: true})(Stat_block);
+
