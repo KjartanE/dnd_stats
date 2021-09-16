@@ -30,13 +30,13 @@ const style = makeStyles({
 class Dwarf extends React.Component {
     render() {
         return(
-            <Dwarf_block updateStats={this.props.updateStats} />
+            <DwarfBlock updateStats={this.props.updateStats} />
         );
     }
 }
 export default Dwarf;
 
-export function Dwarf_block(props){
+export function DwarfBlock(props){
     const classes = style();
     const [dwarf, setDwarf] = useState('');
 

@@ -28,21 +28,16 @@ const style = makeStyles({
 });
 
 class Elf extends React.Component {
-    constructor(props) {
-      super(props);
-  
-      
-    }
     render() {
         return(
-            <Elf_block updateStats={this.props.updateStats} />
+            <ElfBlock updateStats={this.props.updateStats} />
         );
        
     }
 }
 export default Elf;
 
-export function Elf_block(props){
+export function ElfBlock(props){
     const classes = style();
     const [elf, setElf] = useState('');
 

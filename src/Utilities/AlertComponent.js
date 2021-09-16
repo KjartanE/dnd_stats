@@ -1,11 +1,10 @@
-import React, { Component, useRef } from 'react';
-import Button from '@material-ui/core/Button';
+import React, { Component } from 'react';
 import {Snackbar, Box } from '@material-ui/core/';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-class Alert_Component extends Component{
+class AlertComponent extends Component{
   constructor(props){
     super(props);
 
@@ -42,7 +41,7 @@ class Alert_Component extends Component{
     );
   }
 }
-export default Alert_Component;
+export default AlertComponent;
  
 
 function Alert(props) {

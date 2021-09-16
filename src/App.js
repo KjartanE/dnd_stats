@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-//import './App.css';
-import Stat_block from './Stat_block/Stat_block';
-import Skill_block from './Skill_block/Skill_block';
-import Race_block from './Race_block/Race_block.js';
-import Alert_Component from './Utilities/Alert_Component.js';
+import StatBlock from './StatBlock/StatBlock';
+import SkillBlock from './SkillBlock/SkillBlock';
+import RaceBlock from './RaceBlock/RaceBlock.js';
+import AlertComponent from './Utilities/AlertComponent.js';
 
 import { withStyles } from '@material-ui/core/styles';
-import { Box, Button, Container, Grid, Accordion } from '@material-ui/core';
+import { Box, Container, Grid } from '@material-ui/core';
 
 const styles = theme => ({
   root: {    
@@ -208,12 +207,12 @@ class App extends Component{
               <h2>Stat Points: {this.state.points}</h2>
             </Box>
             <Box component='div' className={classes.statSection}>
-              <Stat_block stat="str" appState={this.state} ref={this.str}/>
-              <Stat_block stat="dex" appState={this.state} ref={this.dex}/>
-              <Stat_block stat="con" appState={this.state} ref={this.con}/>
-              <Stat_block stat="int" appState={this.state} ref={this.int}/>
-              <Stat_block stat="wis" appState={this.state} ref={this.wis}/>
-              <Stat_block stat="cha" appState={this.state} ref={this.cha}/>
+              <StatBlock stat="str" appState={this.state} ref={this.str}/>
+              <StatBlock stat="dex" appState={this.state} ref={this.dex}/>
+              <StatBlock stat="con" appState={this.state} ref={this.con}/>
+              <StatBlock stat="int" appState={this.state} ref={this.int}/>
+              <StatBlock stat="wis" appState={this.state} ref={this.wis}/>
+              <StatBlock stat="cha" appState={this.state} ref={this.cha}/>
             </Box>
           </Grid>
           
@@ -221,19 +220,19 @@ class App extends Component{
             <Box className={`${classes.root} ${classes.sub_head}`}>      
               <h2>Skills:</h2>
             </Box>
-            <Skill_block appState={this.state} ref={this.skills}/>
+            <SkillBlock appState={this.state} ref={this.skills}/>
             
           </Grid>
           <Grid item className={classes.raceSection}>
             <Box className={`${classes.root} ${classes.sub_head}`}>
               <h2>Races: </h2> 
             </Box>
-            <Race_block appState={this.state}/>
+            <RaceBlock appState={this.state}/>
 
           </Grid>
         
         </Grid>
-        <Alert_Component ref={this.alert}/>
+        <AlertComponent ref={this.alert}/>
       </Container>
     );
   }  

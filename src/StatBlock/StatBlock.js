@@ -34,7 +34,7 @@ const styles = theme =>({
     }
 });
 
-class Stat_block extends React.Component{
+class StatBlock extends React.Component{
     
     constructor(props){
         super(props);
@@ -176,5 +176,5 @@ class Stat_block extends React.Component{
     }
 
 }
-export default withStyles(styles, {withTheme: true})(Stat_block);
+export default withStyles(styles, {withTheme: true})(StatBlock);
 

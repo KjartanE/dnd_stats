@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { Box } from "@material-ui/core";
 import MuiAccordion from "@material-ui/core/Accordion";
@@ -66,7 +66,7 @@ const AccordionDetails = withStyles((theme) => ({
 }))(MuiAccordionDetails);
 
 
-class Race_block extends React.Component {
+class RaceBlock extends React.Component {
   constructor(props) {
     super(props);
 
@@ -83,7 +83,7 @@ class Race_block extends React.Component {
     return <CustomizedAccordions updateStats={this.updateStats} variantHuman={this.props.appState.variant_Human} />;
   }
 }
-export default Race_block;
+export default RaceBlock;
 
 export function CustomizedAccordions(props) {
   const classes = style();

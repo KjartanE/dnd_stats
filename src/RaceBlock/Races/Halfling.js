@@ -26,16 +26,13 @@ const style = makeStyles({
 });
 
 class Halfling extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
-    return <Halfling_block updateStats={this.props.updateStats} />;
+    return <HalflingBlock updateStats={this.props.updateStats} />;
   }
 }
 export default Halfling;
 
-export function Halfling_block(props) {
+export function HalflingBlock(props) {
   const classes = style();
   const [halfing, setHalfing] = useState('');
 
