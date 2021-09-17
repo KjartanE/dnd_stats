@@ -12,13 +12,16 @@ import Halfling from './Races/Halfling.js';
 import Human  from './Races/Human.js';
 import Dragonborn  from './Races/Dragonborn.js';
 import Gnome  from './Races/Gnome.js';
+import HalfElf from "./Races/HalfElf.js";
+import HalfOrc from "./Races/HalfOrc.js";
+import Tiefling from "./Races/Tiefling.js";
 
 const style = makeStyles({
   root: {
     width: "100%",
 
     backgroundColor: "green",
-    marginTop: "12px",
+    marginTop: "0",
   },
 });
 
@@ -77,10 +80,19 @@ class RaceBlock extends React.Component {
 
   updateStats = (dir1, val1, dir2, val2) => {
     this.props.appState.update_Stats(dir1, val1, dir2, val2);
-  };
+  }
 
   render() {
-    return <CustomizedAccordions updateStats={this.updateStats} variantHuman={this.props.appState.variant_Human} />;
+    return(
+        <Box component='div'>
+          <CustomizedAccordions 
+          updateStats={this.updateStats} 
+          variantHuman={this.props.appState.variant_Human}
+          updateRace={this.props.appState.update_Race}
+           />
+        </Box>
+      
+      ); 
   }
 }
 export default RaceBlock;
@@ -105,7 +117,7 @@ export function CustomizedAccordions(props) {
           <Typography>Dwarf</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Dwarf updateStats={props.updateStats}/>
+          <Dwarf updateStats={props.updateStats} updateRace={props.updateRace}/>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -117,7 +129,7 @@ export function CustomizedAccordions(props) {
           <Typography>Elf</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Elf updateStats={props.updateStats}/>
+            <Elf updateStats={props.updateStats} updateRace={props.updateRace}/>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -129,7 +141,7 @@ export function CustomizedAccordions(props) {
           <Typography>Halfing</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Halfling updateStats={props.updateStats}/>
+            <Halfling updateStats={props.updateStats} updateRace={props.updateRace}/>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -141,7 +153,7 @@ export function CustomizedAccordions(props) {
           <Typography>Human</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Human variantHuman={props.variantHuman}/>
+            <Human variantHuman={props.variantHuman} updateRace={props.updateRace}/>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -153,7 +165,7 @@ export function CustomizedAccordions(props) {
           <Typography>Dragonborn</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Dragonborn updateStats={props.updateStats}/>
+            <Dragonborn updateStats={props.updateStats} updateRace={props.updateRace}/>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -165,7 +177,43 @@ export function CustomizedAccordions(props) {
           <Typography>Gnome</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Gnome updateStats={props.updateStats}/>
+            <Gnome updateStats={props.updateStats} updateRace={props.updateRace}/>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion
+        square
+        expanded={expanded === "panel7"}
+        onChange={handleChange("panel7")}
+      >
+        <AccordionSummary aria-controls="panel7d-content" id="panel7d-header">
+          <Typography>Half-Elf</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+            <HalfElf variantHuman={props.variantHuman} updateRace={props.updateRace}/>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion
+        square
+        expanded={expanded === "panel8"}
+        onChange={handleChange("panel8")}
+      >
+        <AccordionSummary aria-controls="panel8d-content" id="panel8d-header">
+          <Typography>Half-Orc</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+            <HalfOrc updateStats={props.updateStats} updateRace={props.updateRace}/>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion
+        square
+        expanded={expanded === "panel9"}
+        onChange={handleChange("panel9")}
+      >
+        <AccordionSummary aria-controls="panel9d-content" id="panel9d-header">
+          <Typography>Tiefling</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+            <Tiefling updateStats={props.updateStats} updateRace={props.updateRace}/>
         </AccordionDetails>
       </Accordion>
     </Box>

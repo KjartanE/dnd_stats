@@ -64,7 +64,7 @@ class SkillBlock extends React.Component{
             }
         })); 
 
-        console.log(JSON.stringify(this.state));
+        //console.log(JSON.stringify(this.state));
     }
 
     access_Score = (dir) => {

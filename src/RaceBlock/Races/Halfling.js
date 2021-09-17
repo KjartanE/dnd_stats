@@ -27,7 +27,9 @@ const style = makeStyles({
 
 class Halfling extends React.Component {
   render() {
-    return <HalflingBlock updateStats={this.props.updateStats} />;
+    return <HalflingBlock updateStats={this.props.updateStats} 
+    updateRace={this.props.updateRace}
+    />
   }
 }
 export default Halfling;
@@ -91,6 +93,7 @@ export function HalflingBlock(props) {
             type="button"
             onClick={() => {
               props.updateStats("dex", +2, "cha", +1);
+              props.updateRace("Lightfoot Halfling");
               setHalfing("lightfoot");
             }}
           >
@@ -102,6 +105,7 @@ export function HalflingBlock(props) {
             type="button"
             onClick={() => {
               props.updateStats("dex", +2, "con", +1);
+              props.updateRace("Stout Halfling");
               setHalfing("stout");
             }}
           >
@@ -113,6 +117,7 @@ export function HalflingBlock(props) {
             type="button"
             onClick={() => {
               props.updateStats("dex", +2, "wis", +1);
+              props.updateRace("Ghostwise Halfling");
               setHalfing("ghostwise");
             }}
           >

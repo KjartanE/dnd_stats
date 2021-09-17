@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import StatBlock from './StatBlock/StatBlock';
+import BackgroundBlock from './BackgroundBlock/BackgroundBlock.js';
 import SkillBlock from './SkillBlock/SkillBlock';
 import RaceBlock from './RaceBlock/RaceBlock.js';
 import AlertComponent from './Utilities/AlertComponent.js';
 
 import { withStyles } from '@material-ui/core/styles';
-import { Box, Container, Grid } from '@material-ui/core';
+import { Box, Button, Container, Grid } from '@material-ui/core';
 
 const styles = theme => ({
   root: {    
@@ -26,6 +27,7 @@ const styles = theme => ({
   },
   sub_head: {
     backgroundColor: theme.palette.primary2Color,
+    marginBottom: '10px',
     fontSize: 14,
     height: 60,
     width:'100%',
@@ -50,17 +52,22 @@ class App extends Component{
     
     this.state={
       points : 27,
+      race_open: false,
+      race_title: "",
       race_selection:{
-        selected: false,
+        selected: "",
         human: "",
         stat1: "",
         stat2: "",
         val1: 0,
         val2: 0
       },
+      background_open: false,
+
       adjust_Points:this.adjust_Points,
       variant_Human: this.variant_Human,
       update_Stats:this.update_Stats,
+      update_Race:this.update_Race,
       update_Skill_Score: this.update_Skill_Score,
       access_Stat_Score: this.access_Stat_Score,
       warning_Alert: this.warning_Alert
@@ -95,13 +102,27 @@ class App extends Component{
       curRace.selected = false;
       
       this.setState({race_selection: curRace});
+    }else if(curRace.human === 'base'){
+      this.str.current.adjustStat(-1);
+      this.dex.current.adjustStat(-1);
+      this.con.current.adjustStat(-1);
+      this.int.current.adjustStat(-1);
+      this.wis.current.adjustStat(-1);
+      this.cha.current.adjustStat(-1);
+      curRace.human = '';
+      this.setState({race_selection: curRace});
+    }else if(curRace.human === 'variant'){
+      this.adjust_Points(-2);
+      curRace.human = '';
+      this.setState({race_selection: curRace});
+    } else if(curRace.human ==="halfelf"){
+      this.cha.current.adjustStat(-2);
+      curRace.human = "";
+      this.setState({race_selection: curRace});
+      this.adjust_Points(-2);
     }
 
-    if(selection ==="base" && curRace.human !== "base"){
-      if(curRace.human === 'variant'){
-        this.variant_Human("!variant");
-      }
-
+    if(selection ==="base"){
       this.str.current.adjustStat(1);
       this.dex.current.adjustStat(1);
       this.con.current.adjustStat(1);
@@ -112,26 +133,17 @@ class App extends Component{
       curRace.human = "base";
       this.setState({race_selection: curRace});
 
-    }else if(selection === "variant" && curRace.human !== "variant"){
+    }else if(selection === "variant" ){
+        curRace.human = "variant";
+        this.setState({race_selection: curRace});
+        this.adjust_Points(2);
+      }else if(selection === 'halfelf'){
+        curRace.human = "halfelf";
+        this.cha.current.adjustStat(2);
+        this.setState({race_selection: curRace});
+        this.adjust_Points(2);
+      } 
 
-      if(curRace.human === 'base'){
-        this.str.current.adjustStat(-1);
-        this.dex.current.adjustStat(-1);
-        this.con.current.adjustStat(-1);
-        this.int.current.adjustStat(-1);
-        this.wis.current.adjustStat(-1);
-        this.cha.current.adjustStat(-1);
-      }
-
-      curRace.human = "variant";
-      this.setState({race_selection: curRace});
-      this.adjust_Points(2);
-    }else if(selection ==="!variant"){
-      curRace.human = "";
-      
-      this.setState({race_selection: curRace});
-      this.adjust_Points(-2);
-    }
     this.update_Skill_Score();
   }
 
@@ -151,6 +163,11 @@ class App extends Component{
       this.adjust_Points(-2);
       curRace.human = '';
       this.setState({race_selection: curRace});
+    } else if(curRace.human ==="halfelf"){
+      this.cha.current.adjustStat(-2);
+      curRace.human = "";
+      this.setState({race_selection: curRace});
+      this.adjust_Points(-2);
     }
 
     if(!this.state.race_selection.selected){
@@ -174,6 +191,12 @@ class App extends Component{
     this.update_Skill_Score();
     //console.log(JSON.stringify(this.state));
   } 
+
+  update_Race = (race) => {
+    this.setState((state) =>({
+      race_title : race
+    }));
+  }
 
   update_Skill_Score = () => {
     this.skills.current.update_Score();
@@ -224,11 +247,36 @@ class App extends Component{
             
           </Grid>
           <Grid item className={classes.raceSection}>
-            <Box className={`${classes.root} ${classes.sub_head}`}>
-              <h2>Races: </h2> 
-            </Box>
-            <RaceBlock appState={this.state}/>
+            <Button variant="contained" color='primary'
+            className={`${classes.root} ${classes.sub_head}`}
+            onClick={() =>this.setState((state) => ({
+              race_open: !state.race_open
+            }))}>
+              <Box >
+                <h2>Race: {this.state.race_title}</h2> 
 
+              </Box>
+            </Button>
+            {this.state.race_open ? 
+              <RaceBlock appState={this.state}/>
+            : <Box></Box>
+            }
+            
+            <Button variant="contained" color='primary'
+            className={`${classes.root} ${classes.sub_head}`}
+            onClick={() =>this.setState((state) => ({
+              background_open: !state.background_open
+            }))}>
+              <Box >
+                <h2>Background: </h2> 
+
+              </Box>
+            </Button>
+            {this.state.background_open ? 
+              <BackgroundBlock appState={this.state}/>
+            : <Box></Box>
+            }
+            
           </Grid>
         
         </Grid>

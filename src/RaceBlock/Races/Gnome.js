@@ -30,7 +30,9 @@ const style = makeStyles({
 class Gnome extends React.Component {
     render() {
         return(
-            <GnomeBlock updateStats={this.props.updateStats} />
+            <GnomeBlock updateStats={this.props.updateStats} 
+            updateRace={this.props.updateRace}
+            />
         );
     }
 }
@@ -106,6 +108,7 @@ export function GnomeBlock(props){
               type="button"
               onClick={() => {
                 props.updateStats("int", +2, "dex", +1);
+                props.updateRace("Forest Gnome");
                 setGnome("forest");
               }}
             >
@@ -117,6 +120,7 @@ export function GnomeBlock(props){
               type="button"
               onClick={() => {
                 props.updateStats("int", +2, "con", +1);
+                props.updateRace("Rock Gnome");
                 setGnome("rock");
               }}
             >
@@ -128,6 +132,7 @@ export function GnomeBlock(props){
               type="button"
               onClick={() => {
                 props.updateStats("int", +2, "dex", +1);
+                props.updateRace("Deep Gnome");
                 setGnome("deep");
               }}
             >

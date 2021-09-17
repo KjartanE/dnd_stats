@@ -27,7 +27,9 @@ const style = makeStyles({
 
 class Human extends React.Component {
   render() {
-    return <HumanBlock variantHuman={this.props.variantHuman} />;
+    return <HumanBlock variantHuman={this.props.variantHuman}
+    updateRace={this.props.updateRace}
+    />;
   }
 }
 export default Human;
@@ -79,7 +81,7 @@ export function HumanBlock(props) {
                 type="button"
                 onClick={() => {
                   props.variantHuman("base");
-
+                  props.updateRace("Base Human");
                   setHuman("base");
                 }}
               >
@@ -92,6 +94,7 @@ export function HumanBlock(props) {
                 type="button"
                 onClick={() => {
                   props.variantHuman("variant");
+                  props.updateRace("Variant Human");
                   setHuman("variant");
                 }}
               >

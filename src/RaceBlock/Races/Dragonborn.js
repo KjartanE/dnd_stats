@@ -35,7 +35,7 @@ const style = makeStyles({
 
 class Dragonborn extends React.Component {
   render() {
-    return <DragonbornBlock updateStats={this.props.updateStats} />;
+    return <DragonbornBlock updateStats={this.props.updateStats} updateRace={this.props.updateRace}/>;
   }
 }
 export default Dragonborn;
@@ -161,6 +161,7 @@ export function DragonbornBlock(props) {
             <MenuItem onClick={() =>{
               handleClose();
               handleStats();
+              props.updateRace("Black DragonBorn");
               setDragon("black");
             }}>
               <pre>
@@ -170,6 +171,7 @@ export function DragonbornBlock(props) {
             <MenuItem onClick={() =>{
               handleClose();
               handleStats();
+              props.updateRace("Blue DragonBorn");
               setDragon("blue");
             }}>
               <pre>
@@ -179,6 +181,7 @@ export function DragonbornBlock(props) {
             <MenuItem onClick={() =>{
               handleClose();
               handleStats();
+              props.updateRace("Brass DragonBorn");
               setDragon("brass");
             }}>
               <pre>
@@ -188,6 +191,7 @@ export function DragonbornBlock(props) {
             <MenuItem onClick={() =>{
               handleClose();
               handleStats();
+              props.updateRace("Broze DragonBorn");
               setDragon("bronze");
             }}>
               <pre>
@@ -197,6 +201,7 @@ export function DragonbornBlock(props) {
             <MenuItem onClick={() =>{
               handleClose();
               handleStats();
+              props.updateRace("Copper DragonBorn");
               setDragon("copper");
             }}>
               <pre>
@@ -206,6 +211,7 @@ export function DragonbornBlock(props) {
             <MenuItem onClick={() =>{
               handleClose();
               handleStats();
+              props.updateRace("Gold DragonBorn");
               setDragon("gold");
             }}>
               <pre>
@@ -215,6 +221,7 @@ export function DragonbornBlock(props) {
             <MenuItem onClick={() =>{
               handleClose();
               handleStats();
+              props.updateRace("Green DragonBorn");
               setDragon("green");
             }}>
               <pre>
@@ -224,6 +231,7 @@ export function DragonbornBlock(props) {
             <MenuItem onClick={() =>{
               handleClose();
               handleStats();
+              props.updateRace("Red DragonBorn");
               setDragon("red");
             }}>
               <pre>
@@ -233,6 +241,7 @@ export function DragonbornBlock(props) {
             <MenuItem onClick={() =>{
               handleClose();
               handleStats();
+              props.updateRace("Silver DragonBorn");
               setDragon("silver");
             }}>
               <pre>
@@ -242,6 +251,7 @@ export function DragonbornBlock(props) {
             <MenuItem onClick={() =>{
               handleClose();
               handleStats();
+              props.updateRace("White DragonBorn");
               setDragon("white");
             }}>
               <pre>

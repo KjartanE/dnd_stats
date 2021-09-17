@@ -30,7 +30,9 @@ const style = makeStyles({
 class Elf extends React.Component {
     render() {
         return(
-            <ElfBlock updateStats={this.props.updateStats} />
+            <ElfBlock updateStats={this.props.updateStats}
+            updateRace={this.props.updateRace}
+             />
         );
        
     }
@@ -109,6 +111,7 @@ export function ElfBlock(props){
                 type="button"
                 onClick={() => {
                   props.updateStats("dex", +2, "int", +1);
+                  props.updateRace("High Elf");
                   setElf("high");
                 }}
               >
@@ -120,6 +123,7 @@ export function ElfBlock(props){
                 type="button"
                 onClick={() => {
                   props.updateStats("dex", +2, "wis", +1);
+                  props.updateRace("Wood Elf");
                   setElf("wood");
                 }}
               >
@@ -131,6 +135,7 @@ export function ElfBlock(props){
                 type="button"
                 onClick={() => {
                   props.updateStats("dex", +2, "cha", +1);
+                  props.updateRace("Dark Elf ");
                   setElf("dark");
                 }}
               >
