@@ -70,6 +70,7 @@ class App extends Component{
       update_Race:this.update_Race,
       update_Skill_Score: this.update_Skill_Score,
       access_Stat_Score: this.access_Stat_Score,
+      update_Skill: this.update_Skill,
       warning_Alert: this.warning_Alert
     };
 
@@ -200,6 +201,7 @@ class App extends Component{
 
   update_Skill_Score = () => {
     this.skills.current.update_Score();
+    console.log("AAHSDAS");
   }
 
   access_Stat_Score = (dir) => {
@@ -207,6 +209,10 @@ class App extends Component{
     
     return(stat_element.accessScore());
     //console.log(stat_element.state.score);
+  }
+
+  update_Skill = (skill) => {
+    this.skills.current.update_Skill(skill);
   }
 
   warning_Alert = (info) => {

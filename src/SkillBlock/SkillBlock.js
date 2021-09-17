@@ -40,7 +40,27 @@ class SkillBlock extends React.Component{
             access_Score: this.access_Score,
             adjust_Prof: this.adjust_Prof,
             update_Score: this.update_Score,
-            warning_Alert: this.props.appState.warning_Alert
+            warning_Alert: this.props.appState.warning_Alert,
+            update_Skill: this.update_Skill,
+
+            acro: false,
+            anim: false,
+            arca: false,
+            athl: false,
+            dece: false,
+            hist: false,
+            insi: false,
+            inti: false,
+            inve: false,
+            medi: false,
+            natu: false,
+            perc: false,
+            perf: false,
+            pers: false,
+            reli: false,
+            slei: false,
+            stea: false,
+            surv: false,
         }
     }
 
@@ -51,8 +71,8 @@ class SkillBlock extends React.Component{
         //console.log(JSON.stringify(this.state));
     }
 
-    update_Score = () =>{
 
+    update_Score = () =>{
         this.setState((state) => ({
             score:{
                 str: this.access_Score('str'),
@@ -63,12 +83,17 @@ class SkillBlock extends React.Component{
                 cha: this.access_Score('cha')
             }
         })); 
-
         //console.log(JSON.stringify(this.state));
     }
 
     access_Score = (dir) => {
         return(this.props.appState.access_Stat_Score(dir));
+    }
+
+    update_Skill = (skill) => {
+      this.setState((state) => ({
+        [skill]: !this.state[skill]
+      })); 
     }
 
     render(){
@@ -83,46 +108,25 @@ export default SkillBlock;
 export function CheckboxesGroup(props) {
     const classes = style();
 
-    const [state, setState] = React.useState({
-        acro: false,
-        anim: false,
-        arca: false,
-        athl: false,
-        dece: false,
-        hist: false,
-        insi: false,
-        inti: false,
-        inve: false,
-        medi: false,
-        natu: false,
-        perc: false,
-        perf: false,
-        pers: false,
-        reli: false,
-        slei: false,
-        stea: false,
-        surv: false,
-    });
 
     const handleChange = (event) => {
         if(!event.target.checked){
-            setState({ ...state, [event.target.name]: event.target.checked });
+          props.state.update_Skill(event.target.name);
+          //setState({ ...state, [event.target.name]: event.target.checked });
             props.state.adjust_Prof(1);
         }else{
             if(props.state.prof <= 0){
                 props.state.warning_Alert("not enough prof points");
             }else{
-                setState({ ...state, [event.target.name]: event.target.checked });
+                props.state.update_Skill(event.target.name);
+
+                //setState({ ...state, [event.target.name]: event.target.checked });
                 props.state.adjust_Prof(-1);
             }
         }
         props.state.update_Score();
         
     };
-    const { acro, anim, arca, athl, dece, hist, 
-            insi, inti, inve, medi, natu, perc, 
-            perf, pers, reli, slei, stea, surv
-        } = state;
 
 
     return (
@@ -138,7 +142,7 @@ export function CheckboxesGroup(props) {
                 label="Acrobatics (Dex)"
                 dir="dex"
                 handleChange={handleChange}
-                stat_state={acro}
+                stat_state={props.state.acro}
                 skill_state={props.state}
               />
 
@@ -147,7 +151,7 @@ export function CheckboxesGroup(props) {
                 label="Animal Handling (Wis)"
                 dir="wis"
                 handleChange={handleChange}
-                stat_state={anim}
+                stat_state={props.state.anim}
                 skill_state={props.state}
               />
 
@@ -156,7 +160,7 @@ export function CheckboxesGroup(props) {
                 label="Arcana (Int)"
                 dir="int"
                 handleChange={handleChange}
-                stat_state={arca}
+                stat_state={props.state.arca}
                 skill_state={props.state}
               />
 
@@ -165,7 +169,7 @@ export function CheckboxesGroup(props) {
                 label="Athletics (Str)"
                 dir="str"
                 handleChange={handleChange}
-                stat_state={athl}
+                stat_state={props.state.athl}
                 skill_state={props.state}
               />
 
@@ -174,7 +178,7 @@ export function CheckboxesGroup(props) {
                 label="Deception (Cha)"
                 dir="cha"
                 handleChange={handleChange}
-                stat_state={dece}
+                stat_state={props.state.dece}
                 skill_state={props.state}
               />
 
@@ -183,7 +187,7 @@ export function CheckboxesGroup(props) {
                 label="History (Int)"
                 dir="int"
                 handleChange={handleChange}
-                stat_state={hist}
+                stat_state={props.state.hist}
                 skill_state={props.state}
               />
 
@@ -192,7 +196,7 @@ export function CheckboxesGroup(props) {
                 label="Insight (Wis)"
                 dir="wis"
                 handleChange={handleChange}
-                stat_state={insi}
+                stat_state={props.state.insi}
                 skill_state={props.state}
               />
 
@@ -201,7 +205,7 @@ export function CheckboxesGroup(props) {
                 label="Intimidation (Cha)"
                 dir="cha"
                 handleChange={handleChange}
-                stat_state={inti}
+                stat_state={props.state.inti}
                 skill_state={props.state}
               />
 
@@ -210,7 +214,7 @@ export function CheckboxesGroup(props) {
                 label="Investigation (Int)"
                 dir="int"
                 handleChange={handleChange}
-                stat_state={inve}
+                stat_state={props.state.inve}
                 skill_state={props.state}
               />  
               
@@ -219,7 +223,7 @@ export function CheckboxesGroup(props) {
                 label="Medicine (Wis)"
                 dir="wis"
                 handleChange={handleChange}
-                stat_state={medi}
+                stat_state={props.state.medi}
                 skill_state={props.state}
               />
               
@@ -228,7 +232,7 @@ export function CheckboxesGroup(props) {
                 label="Nature (Int)"
                 dir="int"
                 handleChange={handleChange}
-                stat_state={natu}
+                stat_state={props.state.natu}
                 skill_state={props.state}
               />
               
@@ -237,7 +241,7 @@ export function CheckboxesGroup(props) {
                 label="Perception (Wis)"
                 dir="wis"
                 handleChange={handleChange}
-                stat_state={perc}
+                stat_state={props.state.perc}
                 skill_state={props.state}
               />
               
@@ -246,7 +250,7 @@ export function CheckboxesGroup(props) {
                 label="Performance (Cha)"
                 dir="cha"
                 handleChange={handleChange}
-                stat_state={perf}
+                stat_state={props.state.perf}
                 skill_state={props.state}
               />
               
@@ -255,7 +259,7 @@ export function CheckboxesGroup(props) {
                 label="Persuasion (Cha)"
                 dir="cha"
                 handleChange={handleChange}
-                stat_state={pers}
+                stat_state={props.state.pers}
                 skill_state={props.state}
               />
               
@@ -264,7 +268,7 @@ export function CheckboxesGroup(props) {
                 label="Religion (Int)"
                 dir="int"
                 handleChange={handleChange}
-                stat_state={reli}
+                stat_state={props.state.reli}
                 skill_state={props.state}
               />
               
@@ -273,7 +277,7 @@ export function CheckboxesGroup(props) {
                 label="Sleight of Hand (Dex)"
                 dir="dex"
                 handleChange={handleChange}
-                stat_state={slei}
+                stat_state={props.state.slei}
                 skill_state={props.state}
               />
               
@@ -282,7 +286,7 @@ export function CheckboxesGroup(props) {
                 label="Stealth (Dex)"
                 dir="dex"
                 handleChange={handleChange}
-                stat_state={stea}
+                stat_state={props.state.stea}
                 skill_state={props.state}
               />
                             
@@ -291,7 +295,7 @@ export function CheckboxesGroup(props) {
                 label="Survival (Wis)"
                 dir="wis"
                 handleChange={handleChange}
-                stat_state={surv}
+                stat_state={props.state.surv}
                 skill_state={props.state}
               />
 
