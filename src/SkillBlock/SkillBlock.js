@@ -43,6 +43,11 @@ class SkillBlock extends React.Component{
             warning_Alert: this.props.appState.warning_Alert,
             update_Skill: this.update_Skill,
 
+            background_Selected:{
+              background1: "",
+              background2: ""
+            },
+
             acro: false,
             anim: false,
             arca: false,
@@ -90,10 +95,47 @@ class SkillBlock extends React.Component{
         return(this.props.appState.access_Stat_Score(dir));
     }
 
-    update_Skill = (skill) => {
+    update_Skills = (skill1, skill2) => {
+
+      if(!this.state.background_Selected.background1 && 
+        !this.state.background_Selected.background2 ){
+          
+        this.setState((state) => ({
+          [skill1]: !this.state[skill1],
+          [skill2]: !this.state[skill2]
+        })); 
+      }else{
+        this.setState((state) => ({
+          [this.state.background_Selected.background1]: false,
+          [this.state.background_Selected.background2]: false
+        })); 
+        this.setState((state) => ({
+          [skill1]: true,
+          [skill2]: true
+        })); 
+      }
+
+      
+      var setSkills ={...this.state.background_Selected};
+      setSkills.background1 = skill1;
+      setSkills.background2 = skill2;
+      
       this.setState((state) => ({
-        [skill]: !this.state[skill]
+        background_Selected: setSkills
       })); 
+      
+      //console.log(skill1 + " " + skill2);
+    }
+
+    update_Skill = (skill) => {
+      if(this.state.background_Selected.background1 === skill ||
+        this.state.background_Selected.background2 === skill){
+          this.state.adjust_Prof(-1);
+        }else{
+          this.setState((state) => ({
+            [skill]: !this.state[skill]
+          })); 
+        }
     }
 
     render(){

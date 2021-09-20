@@ -63,6 +63,7 @@ class App extends Component{
         val2: 0
       },
       background_open: false,
+      background_title: "",
 
       adjust_Points:this.adjust_Points,
       variant_Human: this.variant_Human,
@@ -70,7 +71,7 @@ class App extends Component{
       update_Race:this.update_Race,
       update_Skill_Score: this.update_Skill_Score,
       access_Stat_Score: this.access_Stat_Score,
-      update_Skill: this.update_Skill,
+      update_Skills: this.update_Skills,
       warning_Alert: this.warning_Alert
     };
 
@@ -201,7 +202,6 @@ class App extends Component{
 
   update_Skill_Score = () => {
     this.skills.current.update_Score();
-    console.log("AAHSDAS");
   }
 
   access_Stat_Score = (dir) => {
@@ -211,8 +211,11 @@ class App extends Component{
     //console.log(stat_element.state.score);
   }
 
-  update_Skill = (skill) => {
-    this.skills.current.update_Skill(skill);
+  update_Skills = (name, skill1, skill2) => {
+    this.setState({
+      background_title: name
+    });
+    this.skills.current.update_Skills(skill1, skill2);
   }
 
   warning_Alert = (info) => {
@@ -274,7 +277,7 @@ class App extends Component{
               background_open: !state.background_open
             }))}>
               <Box >
-                <h2>Background: </h2> 
+                <h2>Background: {this.state.background_title}</h2> 
 
               </Box>
             </Button>

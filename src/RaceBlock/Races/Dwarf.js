@@ -28,9 +28,7 @@ const style = makeStyles({
 });
 
 class Dwarf extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  
     render() {
         return(
             <DwarfBlock updateStats={this.props.updateStats}

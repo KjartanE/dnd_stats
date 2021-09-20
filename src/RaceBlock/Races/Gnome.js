@@ -61,7 +61,7 @@ export function GnomeBlock(props){
               <Box component="div">
                 <strong>Natural Illusionist.</strong> You know the Minor
                 Illusion (PHB.260) cantrip. Intelligence is your spellcasting
-                ability for this spell.
+                ability for this spell.  <br />
                 <strong>Speak with Small Beasts.</strong>
                 You can communicate simple ideas with small or smaller beasts
               </Box>
