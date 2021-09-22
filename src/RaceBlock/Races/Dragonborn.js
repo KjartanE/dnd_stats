@@ -35,7 +35,10 @@ const style = makeStyles({
 
 class Dragonborn extends React.Component {
   render() {
-    return <DragonbornBlock updateStats={this.props.updateStats} updateRace={this.props.updateRace}/>;
+    return (
+    <DragonbornBlock updateStats={this.props.updateStats} 
+    updateRace={this.props.updateRace}/>
+    );
   }
 }
 export default Dragonborn;
@@ -76,47 +79,47 @@ export function DragonbornBlock(props) {
           type of dragon
           <br />
           {dragon === "black" ? (
-            <Box component="div">
+            <>
               <strong>Black | Acid | 30ft Line (Dex. Save)</strong><br />
-            </Box>
+            </>
           ) : dragon === "blue" ? (
-            <Box component="div">
+            <>
               <strong>Blue | Lightning | 30ft Line (Dex. Save)</strong><br />
-            </Box>
+            </>
           ) : dragon === "brass" ? (
-            <Box component="div">
+            <>
               <strong>Brass | Fire | 30ft Line (Dex. Save)</strong><br />
-            </Box>
+            </>
           ) : dragon === "bronze" ? (
-            <Box component="div">
+            <>
               <strong>Bronze | Lightning | 30ft Line (Dex. Save)</strong> <br />
-            </Box>
+            </>
           ) : dragon === "copper" ? (
-            <Box component="div">
+            <>
               <strong>Copper | Acid | 30ft Line (Dex. Save)</strong> <br />
-            </Box>
+            </>
           ) : dragon === "gold" ? (
-            <Box component="div">
+            <>
               <strong>Gold | Fire | 15ft Cone (Dex. Save)</strong> <br />
-            </Box>
+            </>
           ): dragon === "green" ? (
-            <Box component="div">
+            <>
               <strong>Green | Poison | 15ft Cone (Con. Save)</strong> <br />
-            </Box>
+            </>
           ): dragon === "red" ? (
-            <Box component="div">
+            <>
               <strong>Red | Fire | 15ft Cone (Con. Save)</strong> <br />
-            </Box>
+            </>
           ): dragon === "silver" ? (
-            <Box component="div">
+            <>
               <strong>Silver | Cold | 15ft Cone (Con. Save)</strong> <br />
-            </Box>
+            </>
           ): dragon === "white" ? (
-            <Box component="div">
+            <>
               <strong>White | Cold | 15ft Cone (Con. Save)</strong> <br />
-            </Box>
+            </>
           ): (
-            <Box></Box>
+            <></>
           )}
         </Typography>
       </Box>

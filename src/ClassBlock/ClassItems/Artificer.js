@@ -1,6 +1,6 @@
 import React from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import {Box, Button, Grid, Typography} from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import {Box, Button, Typography} from '@material-ui/core';
 
 
 const styles = theme => ({
@@ -17,25 +17,20 @@ const styles = theme => ({
         display: 'flex',
         alignItems: 'flex-start',
         justifyContent: 'center'
-
     },
     info:{
         padding: '2% 5%',
         width: '80%'
-
-
     },
-    actions:{
-        
-
-        bottom: '0',
+    actions:{    
+        bottom: '0px',
         padding: '2%',
         width: '25%',
-        height: '675px',
+        height: '700px',
         backgroundColor: theme.palette.accent1Color,
         
         textAlign:'center',
-        bottom: '0px'
+        
     },
     buttons:{
         height: '60px',
@@ -64,19 +59,22 @@ class Artificer extends React.Component{
         return (
           <Box className={classes.classBox}>
             <Box className={classes.info}>
+                
+                <h2>Artificer Class Features</h2>
+                <h3>Hit Points</h3>
                 <Typography>
-                    <h2>Artificer Class Features</h2>
-                    <h3>Hit Points</h3>
                     <strong>Hit Dice:</strong> 1d8 per artificer level<br/>
                     <strong>Hit Points at 1st Level:</strong> 8 + your Constitution modifier<br/>
                     <strong>Hit Points at Higher Levels:</strong> 1d8 (or 5) + your Constitution modifier per artificer level after 1st<br/>
-                    <h3>Proficiencies</h3>
+                </Typography>
+                <h3>Proficiencies</h3>
+                <Typography>
                     <strong>Armor:</strong> Light armor, medium armor, shields<br/>
                     <strong>Weapons:</strong> Simple weapons<br/>
                     <strong>Tools:</strong> Thieves’ tools, tinker’s tools, one type of artisan’s tools of your choice<br/>
                     <strong>Saving Throws:</strong> Constitution, Intelligence<br/>
                     <strong>Skills:</strong> Choose two from Arcana, History, Investigation, Medicine, Nature, Perception, Sleight of Hand<br/>
-
+                </Typography>
                     <h3>Equipment</h3>
                     You start with the following equipment, in addition to the equipment granted by your background:<br/>
 
@@ -87,7 +85,6 @@ class Artificer extends React.Component{
                         <li>thieves’ tools and a dungeoneer’s pack</li>
                     </ul>
 
-                </Typography>
             </Box>
             <Box className={classes.actions} >
                 

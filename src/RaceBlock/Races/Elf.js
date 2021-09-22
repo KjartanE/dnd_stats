@@ -64,25 +64,25 @@ export function ElfBlock(props){
               hours of semi conscious meditation.
               <br />
               {elf === "high" ? (
-                <Box component="div">
+                <>
                   <strong>Extra Languages</strong> One of your choice <br />
                   <strong>Elf Weapon Training.</strong> Proficiency with
                   Longswords, Shortswords, Shortbows, and Longbows <br />
                   <strong>Cantrip.</strong> One cantrip of your choice from the
                   wizard spell list. Intelligence is your spellcasting ability
                   for it. <br />
-                </Box>
+                </>
               ) : elf === "wood" ? (
-                <Box component="div">
+                <>
                   <strong>Elf Weapon Training.</strong> Proficiency with
                   Longswords, Shortswords, Shortbows, and Longbows
                   <br />
                   <strong>Mask of the wild.</strong> You can attempt to hide
                   when only lightly obscured by foliage, heavy rain, falling
                   snow, mist, and other natural phenomena. <br />
-                </Box>
+                </>
               ) : elf === "dark" ? (
-                <Box component="div">
+                <>
                   <strong>Superior Darkvision.</strong> 120 ft <br />
                   <strong>Sunlight Sensitivity.</strong> Disadvantage on attack
                   rolls and Perception checks that rely on sight when you or
@@ -92,9 +92,9 @@ export function ElfBlock(props){
                   you can cast Faerie Fire (PHB.239) once per day. At 5th level,
                   you can cast the Darkness (PHB.230) spell once per day.
                   Charisma is your spellcasting ability for these spells. <br />
-                </Box>
+                </>
               ) : (
-                <Box></Box>
+                <></>
               )}
             </Typography>
           </Box>

@@ -9,7 +9,7 @@ const styles = theme => ({
         fontSize: 20,
         borderRadius: 8,
         color: 'white',
-        padding: '12px 24px ',
+        padding: '9px 20px ',
         textAlign: 'center',
         margin: 'auto',
         marginBottom: '2px'

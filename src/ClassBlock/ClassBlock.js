@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-import {Box, Card, Button, Grid, List, ListItem, Popover,
+import {Box, Card, Grid, Popover,
     CardActionArea, CardMedia, CardContent, Typography} from '@material-ui/core';
 
 import Artificer from './ClassItems/Artificer';
@@ -108,16 +108,21 @@ export function ClassBlockItem(props){
         </Card>
 
         <Popover open={props.state.Artificer} 
+        anchorReference="anchorPosition"
+        anchorPosition={{ top: 200, left: 400 }}
         onClose={() => props.state.PopoverHandler('Artificer')}>
         <Artificer state={props.state}/>
         </Popover>
-        <Popover open={props.state.Barbarian} onClose={() => props.state.PopoverHandler('Barbarian')}>
+        <Popover open={props.state.Barbarian} 
+        onClose={() => props.state.PopoverHandler('Barbarian')}>
         Barbarian
         </Popover>
-        <Popover open={props.state.Bard} onClose={() => props.state.PopoverHandler('Bard')}>
+        <Popover open={props.state.Bard} 
+        onClose={() => props.state.PopoverHandler('Bard')}>
         Bard
         </Popover>
-        <Popover open={props.state.Cleric} onClose={() => props.state.PopoverHandler('Cleric')}>
+        <Popover open={props.state.Cleric} 
+        onClose={() => props.state.PopoverHandler('Cleric')}>
         Cleric
         </Popover>
       </Box>

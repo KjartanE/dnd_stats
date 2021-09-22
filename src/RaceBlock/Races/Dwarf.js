@@ -29,13 +29,13 @@ const style = makeStyles({
 
 class Dwarf extends React.Component {
   
-    render() {
-        return(
-            <DwarfBlock updateStats={this.props.updateStats}
-            updateRace={this.props.updateRace}
-            />
-        );
-    }
+  render() {
+    return(
+      <DwarfBlock updateStats={this.props.updateStats}
+      updateRace={this.props.updateRace}
+      />
+    );
+  }
 }
 export default Dwarf;
 
@@ -45,7 +45,7 @@ export function DwarfBlock(props){
 
     return (
         <Grid container direction="row">
-          <Box component="div" className={classes.raceInfo}>
+          <Box  className={classes.raceInfo}>
             <Typography>
               <strong>Stat Bonus. +2 CON</strong>
               <br />
@@ -69,19 +69,19 @@ export function DwarfBlock(props){
               <br />
               <strong>Stonecunning.</strong> Considered proficient on History
               checks relating to origin of stonework and add double
-              proficiency bonus to such checks.
+              proficiency bonus to such checks.<br />
               {dwarf === "hill" ? (
-                <Box component="div">
+                <>
                   <strong>Dwarven Toughness.</strong> +1 Maximum hit points
                   every level (Including level 1)
-                </Box>
+                </>
               ) : dwarf === "mountain" ? (
-                <Box component="div" >
+                <>
                   <strong>Dwarven Armor Training.</strong> Proficiency with
                   light and medium armor.
-                </Box>
+                </>
               ) : dwarf === "duergar" ? (
-                <Box component="div" >
+                <>
                   <strong>Superior Darkvision.</strong> 120 ft <br />
                   <strong>Duergar Resilience.</strong> Advantage on saving
                   throws against illusions and against being charmed or
@@ -96,9 +96,9 @@ export function DwarfBlock(props){
                   <strong>Sunlight Sensitivity.</strong> Disadvantage on
                   attack rolls and perception checks that rely on sight when
                   you or your target are in direct sunlight
-                </Box>
+                </>
               ) : (
-                <Box></Box>
+                <></>
               )}
             </Typography>
           </Box>

@@ -86,7 +86,7 @@ class RaceBlock extends React.Component {
     return(
         <Box component='div' style={{marginBottom:'8px'}}>
           <CustomizedAccordions 
-          updateStats={this.updateStats} 
+          updateStats={this.state.updateStats} 
           variantHuman={this.props.appState.variant_Human}
           updateRace={this.props.appState.update_Race}
            />
@@ -219,87 +219,3 @@ export function CustomizedAccordions(props) {
     </Box>
   );
 }
-
-/*
-<Accordion
-        square
-        expanded={expanded === "panel#"}
-        onChange={handleChange("panel#")}
-      >
-        <AccordionSummary aria-controls="panel#d-content" id="panel#d-header">
-          <Typography></Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Box component="div" className={classes.raceInfo}>
-            <Typography>
-              <strong></strong>
-              <br />
-              <strong></strong>
-              <br />
-              <strong></strong> 
-              <br />
-              { === "" ? (
-                <Box component="div">
-                  <strong></strong> <br />
-                </Box>
-              ) :  === "" ? (
-                <Box component="div">
-                  <strong> </strong>
-                  
-                  <br />
-                </Box>
-              ) :  === "" ? (
-                <Box component="div">
-                  <strong></strong>  <br />
-                </Box>
-              ) : (
-                <Box></Box>
-              )}
-            </Typography>
-          </Box>
-          <Box component="div" className={classes.raceButtons}>
-            <ButtonGroup
-              className={classes.buttonGroup}
-              orientation="vertical"
-              size="small"
-              color="primary"
-              variant="contained"
-            >
-              <Button
-                className={classes.button}
-                type="button"
-                onClick={() => {
-                  props.updateStats("dex", +2, "cha", +1);
-                  set("");
-                }}
-              >
-                <br />
-                
-              </Button>
-              <Button
-                className={classes.button}
-                type="button"
-                onClick={() => {
-                  props.updateStats("dex", +2, "con", +1);
-                  ("");
-                }}
-              >
-                <br />
-                
-              </Button>
-              <Button
-                className={classes.button}
-                type="button"
-                onClick={() => {
-                  props.updateStats("dex", +2, "wis", +1);
-                  ("");
-                }}
-              >
-                 <br />
-                
-              </Button>
-            </ButtonGroup>
-          </Box>
-        </AccordionDetails>
-      </Accordion>
-*/

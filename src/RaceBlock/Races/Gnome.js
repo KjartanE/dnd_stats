@@ -58,15 +58,15 @@ export function GnomeBlock(props){
             Wisdom, and Charisma saving throws against magic.
             <br />
             {gnome === "forest" ? (
-              <Box component="div">
+              <>
                 <strong>Natural Illusionist.</strong> You know the Minor
                 Illusion (PHB.260) cantrip. Intelligence is your spellcasting
                 ability for this spell.  <br />
                 <strong>Speak with Small Beasts.</strong>
                 You can communicate simple ideas with small or smaller beasts
-              </Box>
+              </>
             ) : gnome === "rock" ? (
-              <Box component="div">
+              <>
                 <strong>Artificer’s Lore.</strong>
                 Double proficiency bonus on History checks related to magic
                 items, alchemical objects, or technological devices
@@ -81,16 +81,16 @@ export function GnomeBlock(props){
                 action to use Music Box. Plays a single song at moderate volume
                 when opened. Stops when closed or the song ends
                 <br />
-              </Box>
+              </>
             ) : gnome === "deep" ? (
-              <Box component="div">
+              <>
                 <strong>Superior Darkvision.</strong> 120 ft <br />
                 <strong>Stone Camouflage. </strong> Advantage on Stealth checks
                 to hide in rocky terrain
                 <br />
-              </Box>
+              </>
             ) : (
-              <Box></Box>
+              <></>
             )}
           </Typography>
         </Box>

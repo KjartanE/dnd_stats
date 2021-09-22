@@ -47,7 +47,7 @@ export function HumanBlock(props) {
               <strong>Languages.</strong> Common, and one of your choice.
               <br />
               {human === "variant" ? (
-                <Box component="div">
+                <>
                   <strong>
                     Replaces the Abliity Score Increase of base human
                   </strong>{" "}
@@ -57,14 +57,14 @@ export function HumanBlock(props) {
                   <strong>Skills.</strong> Proficiency in one skill of your
                   choice <br />
                   <strong>Feat.</strong> One feat of your choice
-                </Box>
+                </>
               ) : (
-                <Box component="div">
+                <>
                   <strong>
                     Stat Bonus. +1 STR | +1 DEX | +1 CON | +1 WIS | +1 CHA{" "}
                   </strong>
                   <br />
-                </Box>
+                </>
               )}
             </Typography>
           </Box>

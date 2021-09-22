@@ -57,26 +57,26 @@ export function HalflingBlock(props) {
           of any creature that is a size larger than yours.
           <br />
           {halfing === "lightfoot" ? (
-            <Box component="div">
+            <>
               <strong>Naturally Stealthy.</strong> You can attempt to hide even
               when obscured only by a creature at least 1 size larger than you.{" "}
               <br />
-            </Box>
+            </>
           ) : halfing === "stout" ? (
-            <Box component="div">
+            <>
               <strong>Stout Resilience. </strong>
               Advantage on saving throws against poison. Resistance against
               poison damage
               <br />
-            </Box>
+            </>
           ) : halfing === "ghostwise" ? (
-            <Box component="div">
+            <>
               <strong>Silent Speech.</strong> You can speak telepathically to
               any creature within 30 ft. Must share a language for it to
               understand you. One creature at a time. <br />
-            </Box>
+            </>
           ) : (
-            <Box></Box>
+            <></>
           )}
         </Typography>
       </Box>

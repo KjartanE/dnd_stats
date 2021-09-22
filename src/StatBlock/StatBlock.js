@@ -65,6 +65,7 @@ class StatBlock extends React.Component{
 
     decreasePoints = () =>{
         if(this.state.points_added >0){
+
             if(this.state.stat >13){
                 this.props.appState.adjust_Points(2);
             }else{
@@ -78,7 +79,7 @@ class StatBlock extends React.Component{
             })); 
             this.props.appState.update_Skill_Score();
         }else{
-            this.props.appState.warning_Alert("To Few Points Left!");
+            this.props.appState.warning_Alert("To Few Stat Points Left!");
         }
     }
 
@@ -94,11 +95,20 @@ class StatBlock extends React.Component{
                     points_added: state.points_added +1
                 }));            
                 this.props.appState.update_Skill_Score();
+
             }else{
-                this.props.appState.warning_Alert("Not Enough Points!");
+                this.props.appState.warning_Alert("Not Enough Stat Points!");
             }
         }else{
-            if(this.props.appState.points > 0){
+            if (this.props.appState.race_points > 0) {
+                this.props.appState.adjust_Race_Points(-1, this.props.stat);            
+                this.setState((state) => ({
+                    stat: state.stat + 1,
+                    score: this.modCalc(state.stat + 1),
+                    points_added: state.points_added 
+                }));
+                this.props.appState.update_Skill_Score();
+            }else if(this.props.appState.points > 0){
                 this.props.appState.adjust_Points(-1);            
                 this.setState((state) => ({
                     stat: state.stat + 1,
@@ -107,7 +117,7 @@ class StatBlock extends React.Component{
                 }));
                 this.props.appState.update_Skill_Score();
             }else{
-                this.props.appState.warning_Alert("Not Enough Points!");
+                this.props.appState.warning_Alert("Not Enough Stat Points!");
             }
         }
     }

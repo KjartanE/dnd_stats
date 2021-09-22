@@ -188,11 +188,14 @@ class SkillBlock extends React.Component{
       //console.log(skill1 + " " + skill2);
     }
 
-    update_Skill = (skill) => {
-      if (this.state.class_Selected.during) {
+    update_Skill = (skill, val) => {
+      //console.log(JSON.stringify(this.state.class_Selected));
+
+      if (this.state.class_Selected.during === true && val === -1) {
         var class_Selected = {...this.state.class_Selected};
         if (this.state.class_Selected.count === 2) {
           class_Selected.classSkill1 = skill;    
+
           class_Selected.count = 1;
         } else if (this.state.class_Selected.count === 1) {
           class_Selected.classSkill2 = skill; 
@@ -200,6 +203,7 @@ class SkillBlock extends React.Component{
           class_Selected.count = 0;
           this.state.disable_Disable();  
         }
+
         this.setState({
           class_Selected: class_Selected
         });
@@ -213,22 +217,28 @@ class SkillBlock extends React.Component{
         this.setState((state) => ({
           [skill]: !this.state[skill]
         }));
+        this.state.adjust_Prof(val);
       }else{
-        this.state.adjust_Prof(-1);    
+        this.props.appState.warning_Alert("Cannot Remove Class or Background Skill");
       }
+        
       //console.log(JSON.stringify(this.state.background_Selected));
-      //console.log(JSON.stringify(this.state.class_Selected));
         
     }
     
     update_Class = (className, availableSkills) =>{
+      var class_Selected = {...this.state.class_Selected};
       var disabled = {...this.state.disabled};
 
-      if (this.state.class_Selected.classSkill1) {
-        this.setState({
+      if (this.state.class_Selected.classSkill1 !== "") {        
+        
+        this.setState((state) => ({
           [this.state.class_Selected.classSkill1]: false,
           [this.state.class_Selected.classSkill2]: false
-        });
+        }));
+
+        class_Selected.classSkill1 = "";
+        class_Selected.classSkill2 = "";
       }
 
       this.adjust_Prof(2);
@@ -246,7 +256,7 @@ class SkillBlock extends React.Component{
         }
       }    
 
-      var class_Selected = {...this.state.class_Selected};
+      
       class_Selected.during = true;
       class_Selected.count =2;
       class_Selected.class = className;
@@ -262,18 +272,13 @@ class SkillBlock extends React.Component{
 
     disable_Disable = () => {
       var disabled = {...this.state.disabled};
-
-      
+ 
       for (let i = 0; i < this.state.disabled_iter.length; i++) {
         const element = this.state.disabled_iter[i];
         disabled[element] = false;
       }
-      var class_Selected = {...this.state.class_Selected};
-      class_Selected.during = false;
-
       this.setState({
         disabled: disabled,
-        class_Selected: class_Selected
       });
     }
 
@@ -292,17 +297,12 @@ export function CheckboxesGroup(props) {
 
     const handleChange = (event) => {
         if(!event.target.checked){
-          props.state.update_Skill(event.target.name);
-          //setState({ ...state, [event.target.name]: event.target.checked });
-            props.state.adjust_Prof(1);
+          props.state.update_Skill(event.target.name ,1);
         }else{
             if(props.state.prof <= 0){
-                props.state.warning_Alert("not enough prof points");
+                props.state.warning_Alert("No Available Skill Points");
             }else{
-                props.state.update_Skill(event.target.name);
-
-                //setState({ ...state, [event.target.name]: event.target.checked });
-                props.state.adjust_Prof(-1);
+                props.state.update_Skill(event.target.name ,-1);
             }
         }
         props.state.update_Score();
@@ -528,7 +528,7 @@ export function StatGrid(props) {
           />
         </Grid>
         <Grid item >
-          <FormLabel component="modifer">
+          <FormLabel >
             {props.stat_state === true
               ? props.skill_state.score[props.dir] + props.skill_state.prof_bonus
               : props.skill_state.score[props.dir]}

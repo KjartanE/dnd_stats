@@ -59,13 +59,13 @@ export function HalfElfBlock(props){
             being charmed. Magic can’t put you to sleep.
             <br />
             {halfELf === "base" ? (
-              <Box component="div">
+              <>
                 <strong>Skill Versatility.</strong> Proficiency in two skills of
                 your choice
                 <br />
-              </Box>
+              </>
             ) : halfELf === "wood" ? (
-              <Box component="div">
+              <>
                 <strong>Elf Weapon Training.</strong> Proficiency with
                 Longswords, Shortswords, Shortbows, and Longbows
                 <br />
@@ -74,29 +74,29 @@ export function HalfElfBlock(props){
                 obscured by foliage, heavy rain, falling snow, mist, and other
                 natural phenomena.
                 <br />
-              </Box>
+              </>
             ) : halfELf === "high" ? (
-              <Box component="div">
+              <>
                 <strong>High Elf descent.</strong> Elf Weapon Training, or Cantrip<br />
                 <strong>Elf Weapon Training.</strong> Proficiency with
                 Longswords, Shortswords, Shortbows, and Longbows
                 <br />
-              </Box>
+              </>
             ) : halfELf === "drow" ? (
-              <Box component="div">
+              <>
                 <strong>Drow Descent.</strong> Drow Magic<br />
                 <strong>Drow Magic.</strong>
                   You know the Dancing Lights (PHB.230) cantrip. At 3rd level,
                   you can cast Faerie Fire (PHB.239) once per day. At 5th level,
                   you can cast the Darkness (PHB.230) spell once per day.
                   Charisma is your spellcasting ability for these spells. <br />
-              </Box>
+              </>
             ) : halfELf === "aquatic" ? (
-              <Box component="div">
+              <>
                 <strong>Aquatic.</strong> 30 ft Swim Speed<br />
-              </Box>
+              </>
             ) : (
-              <Box></Box>
+              <></>
             )}
           </Typography>
         </Box>
