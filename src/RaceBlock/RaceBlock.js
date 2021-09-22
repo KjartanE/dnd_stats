@@ -84,7 +84,7 @@ class RaceBlock extends React.Component {
 
   render() {
     return(
-        <Box component='div'>
+        <Box component='div' style={{marginBottom:'8px'}}>
           <CustomizedAccordions 
           updateStats={this.updateStats} 
           variantHuman={this.props.appState.variant_Human}

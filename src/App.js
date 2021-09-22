@@ -3,6 +3,7 @@ import StatBlock from './StatBlock/StatBlock';
 import BackgroundBlock from './BackgroundBlock/BackgroundBlock.js';
 import SkillBlock from './SkillBlock/SkillBlock';
 import RaceBlock from './RaceBlock/RaceBlock.js';
+import ClassBlock from './ClassBlock/ClassBlock.js';
 import AlertComponent from './Utilities/AlertComponent.js';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -65,13 +66,18 @@ class App extends Component{
       background_open: false,
       background_title: "",
 
+      class_open: false,
+      class_title: "",
+
       adjust_Points:this.adjust_Points,
       variant_Human: this.variant_Human,
       update_Stats:this.update_Stats,
       update_Race:this.update_Race,
       update_Skill_Score: this.update_Skill_Score,
       access_Stat_Score: this.access_Stat_Score,
+      update_Skill_Points: this.update_Skill_Points,
       update_Skills: this.update_Skills,
+      update_Class: this.update_Class,
       warning_Alert: this.warning_Alert
     };
 
@@ -195,6 +201,18 @@ class App extends Component{
   } 
 
   update_Race = (race) => {
+    if(race === 'Base Half-Elf'){
+      this.update_Skill_Points(2);
+    }else if (race === 'Variant Human'){
+      this.update_Skill_Points(1);
+    }
+
+    if(this.state.race_title === 'Base Half-Elf'){
+      this.update_Skill_Points(-2);
+    }else if (this.state.race_title === 'Variant Human'){
+      this.update_Skill_Points(-1);
+    }
+
     this.setState((state) =>({
       race_title : race
     }));
@@ -211,11 +229,25 @@ class App extends Component{
     //console.log(stat_element.state.score);
   }
 
+  update_Skill_Points = (val) => {
+    this.skills.current.adjust_Prof(val);
+  }
+
   update_Skills = (name, skill1, skill2) => {
     this.setState({
       background_title: name
     });
     this.skills.current.update_Skills(skill1, skill2);
+  }
+
+  update_Class = (className, availableSkills) =>{
+    //console.log(className+ "  " + availableSkills);
+    
+    this.setState((state) =>({
+      class_title : className
+    }));
+    this.skills.current.update_Class(className, availableSkills);
+    
   }
 
   warning_Alert = (info) => {
@@ -283,6 +315,20 @@ class App extends Component{
             </Button>
             {this.state.background_open ? 
               <BackgroundBlock appState={this.state}/>
+            : <Box></Box>
+            }
+             <Button variant="contained" color='primary'
+            className={`${classes.root} ${classes.sub_head}`}
+            onClick={() =>this.setState((state) => ({
+              class_open: !state.class_open
+            }))}>
+              <Box >
+                <h2>Class: {this.state.class_title}</h2> 
+
+              </Box>
+            </Button>
+            {this.state.class_open ? 
+              <ClassBlock appState={this.state} />
             : <Box></Box>
             }
             

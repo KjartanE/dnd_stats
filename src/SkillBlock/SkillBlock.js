@@ -35,17 +35,53 @@ class SkillBlock extends React.Component{
                 wis: -1,
                 cha: -1
             },
-            prof: 2,
+            prof: 0,
             prof_bonus: 2,
             access_Score: this.access_Score,
             adjust_Prof: this.adjust_Prof,
             update_Score: this.update_Score,
             warning_Alert: this.props.appState.warning_Alert,
             update_Skill: this.update_Skill,
+            update_Class: this.update_Class,
+            disable_Disable: this.disable_Disable ,
 
             background_Selected:{
               background1: "",
               background2: ""
+            },
+
+            class_Selected:{
+              during: false,
+              count: 0,
+              class: "",
+              classSkill1: "",
+              classSkill2: ""
+            },
+
+            disabled_iter:[
+              "acro","anim","arca","athl","dece","hist","insi","inti","inve",
+              "medi","natu","perc","perf","pers","reli","slei","stea","surv"
+            ],
+
+            disabled:{
+              acro: false,
+              anim: false,
+              arca: false,
+              athl: false,
+              dece: false,
+              hist: false,
+              insi: false,
+              inti: false,
+              inve: false,
+              medi: false,
+              natu: false,
+              perc: false,
+              perf: false,
+              pers: false,
+              reli: false,
+              slei: false,
+              stea: false,
+              surv: false,
             },
 
             acro: false,
@@ -69,10 +105,10 @@ class SkillBlock extends React.Component{
         }
     }
 
-    adjust_Prof = (val) =>{
-        this.setState((state) => ({
-            prof: state.prof + val,
-        })); 
+    adjust_Prof = (val) =>{ 
+      this.setState((state) => ({
+        prof: state.prof + val,
+      }));    
         //console.log(JSON.stringify(this.state));
     }
 
@@ -97,14 +133,39 @@ class SkillBlock extends React.Component{
 
     update_Skills = (skill1, skill2) => {
 
+      if(this.state.background_Selected.background1 === '-'){
+        this.adjust_Prof(-2);
+      }
+      if( skill1 === '-'){
+        this.adjust_Prof(2);
+      }
+
       if(!this.state.background_Selected.background1 && 
-        !this.state.background_Selected.background2 ){
+      !this.state.background_Selected.background2 ){
           
-        this.setState((state) => ({
-          [skill1]: !this.state[skill1],
-          [skill2]: !this.state[skill2]
+        if(this.state[skill1]){
+          this.adjust_Prof(1);  
+        }
+        if(this.state[skill2]){
+          this.adjust_Prof(1);
+        }
+          this.setState((state) => ({
+          [skill1]: true,
+          [skill2]: true
         })); 
       }else{
+
+        if(this.state[skill1] 
+          && skill1 !== this.state.background_Selected.background1
+          && skill1 !== this.state.background_Selected.background2){
+              this.adjust_Prof(1);  
+        }
+        if(this.state[skill2]
+          && skill2 !== this.state.background_Selected.background1
+          && skill2 !== this.state.background_Selected.background2){
+          this.adjust_Prof(1);
+        }
+       
         this.setState((state) => ({
           [this.state.background_Selected.background1]: false,
           [this.state.background_Selected.background2]: false
@@ -128,14 +189,92 @@ class SkillBlock extends React.Component{
     }
 
     update_Skill = (skill) => {
-      if(this.state.background_Selected.background1 === skill ||
-        this.state.background_Selected.background2 === skill){
-          this.state.adjust_Prof(-1);
-        }else{
-          this.setState((state) => ({
-            [skill]: !this.state[skill]
-          })); 
+      if (this.state.class_Selected.during) {
+        var class_Selected = {...this.state.class_Selected};
+        if (this.state.class_Selected.count === 2) {
+          class_Selected.classSkill1 = skill;    
+          class_Selected.count = 1;
+        } else if (this.state.class_Selected.count === 1) {
+          class_Selected.classSkill2 = skill; 
+          class_Selected.during = false; 
+          class_Selected.count = 0;
+          this.state.disable_Disable();  
         }
+        this.setState({
+          class_Selected: class_Selected
+        });
+      }
+
+      if(this.state.background_Selected.background1 !== skill &&
+      this.state.background_Selected.background2 !== skill &&
+      this.state.class_Selected.classSkill1 !== skill && 
+      this.state.class_Selected.classSkill2 !== skill 
+      ){
+        this.setState((state) => ({
+          [skill]: !this.state[skill]
+        }));
+      }else{
+        this.state.adjust_Prof(-1);    
+      }
+      //console.log(JSON.stringify(this.state.background_Selected));
+      //console.log(JSON.stringify(this.state.class_Selected));
+        
+    }
+    
+    update_Class = (className, availableSkills) =>{
+      var disabled = {...this.state.disabled};
+
+      if (this.state.class_Selected.classSkill1) {
+        this.setState({
+          [this.state.class_Selected.classSkill1]: false,
+          [this.state.class_Selected.classSkill2]: false
+        });
+      }
+
+      this.adjust_Prof(2);
+      
+      for (let i = 0; i < this.state.disabled_iter.length; i++) {
+        const element = this.state.disabled_iter[i];
+        for (let y = 0; y < availableSkills.length; y++) {
+          const avail = availableSkills[y];
+          if (avail === element) {
+            disabled[element]= false;
+            break;
+          }else{
+            disabled[element]= true;
+          }
+        }
+      }    
+
+      var class_Selected = {...this.state.class_Selected};
+      class_Selected.during = true;
+      class_Selected.count =2;
+      class_Selected.class = className;
+
+      this.setState({
+        disabled: disabled,
+        class_Selected: class_Selected
+      });
+      
+
+      //console.log(JSON.stringify(disabled));
+    }
+
+    disable_Disable = () => {
+      var disabled = {...this.state.disabled};
+
+      
+      for (let i = 0; i < this.state.disabled_iter.length; i++) {
+        const element = this.state.disabled_iter[i];
+        disabled[element] = false;
+      }
+      var class_Selected = {...this.state.class_Selected};
+      class_Selected.during = false;
+
+      this.setState({
+        disabled: disabled,
+        class_Selected: class_Selected
+      });
     }
 
     render(){
@@ -167,7 +306,6 @@ export function CheckboxesGroup(props) {
             }
         }
         props.state.update_Score();
-        
     };
 
 
@@ -185,6 +323,7 @@ export function CheckboxesGroup(props) {
                 dir="dex"
                 handleChange={handleChange}
                 stat_state={props.state.acro}
+                dis_state={props.state.disabled.acro}
                 skill_state={props.state}
               />
 
@@ -194,6 +333,7 @@ export function CheckboxesGroup(props) {
                 dir="wis"
                 handleChange={handleChange}
                 stat_state={props.state.anim}
+                dis_state={props.state.disabled.anim}
                 skill_state={props.state}
               />
 
@@ -203,6 +343,7 @@ export function CheckboxesGroup(props) {
                 dir="int"
                 handleChange={handleChange}
                 stat_state={props.state.arca}
+                dis_state={props.state.disabled.arca}
                 skill_state={props.state}
               />
 
@@ -212,6 +353,7 @@ export function CheckboxesGroup(props) {
                 dir="str"
                 handleChange={handleChange}
                 stat_state={props.state.athl}
+                dis_state={props.state.disabled.athl}
                 skill_state={props.state}
               />
 
@@ -221,6 +363,7 @@ export function CheckboxesGroup(props) {
                 dir="cha"
                 handleChange={handleChange}
                 stat_state={props.state.dece}
+                dis_state={props.state.disabled.dece}
                 skill_state={props.state}
               />
 
@@ -230,6 +373,7 @@ export function CheckboxesGroup(props) {
                 dir="int"
                 handleChange={handleChange}
                 stat_state={props.state.hist}
+                dis_state={props.state.disabled.hist}
                 skill_state={props.state}
               />
 
@@ -239,6 +383,7 @@ export function CheckboxesGroup(props) {
                 dir="wis"
                 handleChange={handleChange}
                 stat_state={props.state.insi}
+                dis_state={props.state.disabled.insi}
                 skill_state={props.state}
               />
 
@@ -248,6 +393,7 @@ export function CheckboxesGroup(props) {
                 dir="cha"
                 handleChange={handleChange}
                 stat_state={props.state.inti}
+                dis_state={props.state.disabled.inti}
                 skill_state={props.state}
               />
 
@@ -257,6 +403,7 @@ export function CheckboxesGroup(props) {
                 dir="int"
                 handleChange={handleChange}
                 stat_state={props.state.inve}
+                dis_state={props.state.disabled.inve}
                 skill_state={props.state}
               />  
               
@@ -266,6 +413,7 @@ export function CheckboxesGroup(props) {
                 dir="wis"
                 handleChange={handleChange}
                 stat_state={props.state.medi}
+                dis_state={props.state.disabled.medi}
                 skill_state={props.state}
               />
               
@@ -275,6 +423,7 @@ export function CheckboxesGroup(props) {
                 dir="int"
                 handleChange={handleChange}
                 stat_state={props.state.natu}
+                dis_state={props.state.disabled.natu}
                 skill_state={props.state}
               />
               
@@ -284,6 +433,7 @@ export function CheckboxesGroup(props) {
                 dir="wis"
                 handleChange={handleChange}
                 stat_state={props.state.perc}
+                dis_state={props.state.disabled.perc}
                 skill_state={props.state}
               />
               
@@ -293,6 +443,7 @@ export function CheckboxesGroup(props) {
                 dir="cha"
                 handleChange={handleChange}
                 stat_state={props.state.perf}
+                dis_state={props.state.disabled.perf}
                 skill_state={props.state}
               />
               
@@ -302,6 +453,7 @@ export function CheckboxesGroup(props) {
                 dir="cha"
                 handleChange={handleChange}
                 stat_state={props.state.pers}
+                dis_state={props.state.disabled.pers}
                 skill_state={props.state}
               />
               
@@ -311,6 +463,7 @@ export function CheckboxesGroup(props) {
                 dir="int"
                 handleChange={handleChange}
                 stat_state={props.state.reli}
+                dis_state={props.state.disabled.reli}
                 skill_state={props.state}
               />
               
@@ -320,6 +473,7 @@ export function CheckboxesGroup(props) {
                 dir="dex"
                 handleChange={handleChange}
                 stat_state={props.state.slei}
+                dis_state={props.state.disabled.slei}
                 skill_state={props.state}
               />
               
@@ -329,6 +483,7 @@ export function CheckboxesGroup(props) {
                 dir="dex"
                 handleChange={handleChange}
                 stat_state={props.state.stea}
+                dis_state={props.state.disabled.stea}
                 skill_state={props.state}
               />
                             
@@ -338,6 +493,7 @@ export function CheckboxesGroup(props) {
                 dir="wis"
                 handleChange={handleChange}
                 stat_state={props.state.surv}
+                dis_state={props.state.disabled.surv}
                 skill_state={props.state}
               />
 
@@ -363,6 +519,7 @@ export function StatGrid(props) {
             control={
               <Checkbox 
                 checked={props.stat_state} 
+                disabled={props.dis_state}
                 onChange={props.handleChange} 
                 name={props.name}
                 />
