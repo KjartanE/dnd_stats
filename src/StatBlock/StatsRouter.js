@@ -47,44 +47,60 @@ class StatsRouter extends React.Component {
   };
 
   adjust_Race_Points = (val, stat) =>{
-
     var curRace = { ...this.state.race_selection };
 
-    if(val ===2){
+    if(val === -2 || (val === -1 && stat === "-")){
         this.setState((state) => ({
             race_points: state.race_points + val,
-          }));
-        this.props.appState.update_Stat_Points(
-            this.state.points + " + "+ (this.state.race_points + val)
-        );
-    } else if (val === -1) {
-        this.setState((state) => ({
-            race_points: state.race_points + val
         }));
         this.props.appState.update_Stat_Points(
-            this.state.points + " + "+ (this.state.race_points + val)
+            this.state.points 
         );
+        
+    } else if(val === 2){
+        this.setState((state) => ({
+            race_points: state.race_points + val,
+        }));
 
-        if(curRace.stat1 === ''){
+        if (this.state.race_points ===0) {
+            this.props.appState.update_Stat_Points(
+                this.state.points + " + "+ (this.state.race_points + val)
+            );
+        }else if (this.state.race_points ===1) {
+            this.props.appState.update_Stat_Points(
+                this.state.points + " + "+ (this.state.race_points + 1)
+            );
+        }else{
+            this.props.appState.update_Stat_Points(
+                this.state.points + " + "+ (this.state.race_points)
+            );
+        }
+
+    } else if (val === -1) {
+        if (this.state.race_points > 1) {
+            this.props.appState.update_Stat_Points(
+                this.state.points + " + "+ (this.state.race_points + val)
+            );
+        }else{
+            this.props.appState.update_Stat_Points(
+                this.state.points 
+            );
+        }
+
+        if(curRace.val1 === 0){
             curRace.stat1 = stat;
             curRace.val1 = -val;
             curRace.selected = true;
-            this.setState({ race_selection: curRace });
         }else{
             curRace.stat2 = stat;
             curRace.val2 = -val;
             curRace.selected = true;
-            this.setState({ race_selection: curRace });
         }
-    } else if ( val === -2){
-
-        this.props.appState.update_Stat_Points(
-            this.state.points 
-        );
+        this.setState((state) => ({
+            race_points: state.race_points + val
+        }));
+        this.setState({ race_selection: curRace });      
     }
-
-    console.log(JSON.stringify(this.state));
-    
   }
 
   adjust_Points = (val) => {
@@ -92,19 +108,26 @@ class StatsRouter extends React.Component {
       points: state.points + val,
     }));
     this.props.appState.update_Stat_Points(
-      (this.state.points + val)  + this.state.race_points
+      (this.state.points + val)  
     );
-
-    console.log(JSON.stringify(this.state));
-
   }
 
   variant_Human = (selection) => {
     var curRace = { ...this.state.race_selection };
 
-    if (this.state.race_selection.selected) {
-      this[curRace.stat1].current.adjustStat([curRace.val1] * -1);
-      this[curRace.stat2].current.adjustStat([curRace.val2] * -1);
+    if (this.state.race_points >=2) {
+        this.adjust_Race_Points(-2);
+    }else if (this.state.race_points === 1) {
+        this.adjust_Race_Points(-1, "-");
+    }
+
+    if (curRace.selected) {
+        if (curRace.stat1) {
+            this[curRace.stat1].current.adjustStat([curRace.val1] * -1);
+        }
+        if (curRace.stat2) {
+            this[curRace.stat2].current.adjustStat([curRace.val2] * -1);
+        }
 
       curRace.val1 = 0;
       curRace.val2 = 0;
@@ -122,15 +145,13 @@ class StatsRouter extends React.Component {
       this.setState({ race_selection: curRace });
 
     } else if (curRace.human === "variant") {
-      this.adjust_Race_Points(-2);
-      curRace.human = "";
-      this.setState({ race_selection: curRace });
+        curRace.human = "";
+        this.setState({ race_selection: curRace });
 
     } else if (curRace.human === "halfelf") {
       this.cha.current.adjustStat(-2);
       curRace.human = "";
       this.setState({ race_selection: curRace });
-      this.adjust_Race_Points(-2);
     }
 
     if (selection === "base") {
@@ -145,13 +166,13 @@ class StatsRouter extends React.Component {
       this.setState({ race_selection: curRace });
     } else if (selection === "variant") {
       curRace.human = "variant";
-      this.setState({ race_selection: curRace });
       this.adjust_Race_Points(2);
+      this.setState({ race_selection: curRace });
     } else if (selection === "halfelf") {
       curRace.human = "halfelf";
       this.cha.current.adjustStat(2);
-      this.setState({ race_selection: curRace });
       this.adjust_Race_Points(2);
+      this.setState({ race_selection: curRace });
     }
 
     this.update_Skill_Score();
@@ -170,14 +191,23 @@ class StatsRouter extends React.Component {
       curRace.human = "";
       this.setState({ race_selection: curRace });
     } else if (curRace.human === "variant") {
-      this.adjust_Race_Points(-2);
+        if (this.state.race_points ===2) {
+            this.adjust_Race_Points(-2);
+        }else if (this.state.race_points === 1) {
+            this.adjust_Race_Points(-1, "-");
+        }
       curRace.human = "";
       this.setState({ race_selection: curRace });
+
     } else if (curRace.human === "halfelf") {
+        if (this.state.race_points ===2) {
+            this.adjust_Race_Points(-2);
+        }else if (this.state.race_points === 1) {
+            this.adjust_Race_Points(-1, "-");
+        }
       this.cha.current.adjustStat(-2);
       curRace.human = "";
       this.setState({ race_selection: curRace });
-      this.adjust_Race_Points(-2);
     }
 
     if (!this.state.race_selection.selected) {
