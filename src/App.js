@@ -5,7 +5,7 @@ import BackgroundBlock from './BackgroundBlock/BackgroundBlock.js';
 import SkillBlock from './SkillBlock/SkillBlock';
 import RaceBlock from './RaceBlock/RaceBlock.js';
 import ClassBlock from './ClassBlock/ClassBlock.js';
-import AlertComponent from './Utilities/AlertComponent.js';
+import {AlertProvider} from './Utilities/AlertComponent';
 
 import { withStyles } from '@material-ui/core/styles';
 import { Box, Button, Container, Grid } from '@material-ui/core';
@@ -71,7 +71,7 @@ class App extends Component{
       update_Skill_Points: this.update_Skill_Points,
       update_Skills: this.update_Skills,
       update_Class: this.update_Class,
-      warning_Alert: this.warning_Alert
+     
     };
 
 
@@ -138,10 +138,6 @@ class App extends Component{
     }));
     this.skills.current.update_Class(className, availableSkills);
     
-  }
-
-  warning_Alert = (info) => {
-    this.alert.current.alert_On(info);
   }
 
   menu_change = (menu) => {
@@ -223,10 +219,11 @@ class App extends Component{
           </Grid>
         
         </Grid>
-        <AlertComponent ref={this.alert}/>
       </Container>
     );
   }  
 }
+
+
 //<button  onClick={this.decrease_Points(1)}>Click me</button>
 export default withStyles(styles, {withTheme: true})( App);

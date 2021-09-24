@@ -2,6 +2,9 @@ import React from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
 import {Box, Button, ButtonGroup, Paper} from '@material-ui/core';
+import { AlertContext } from '../Utilities/AlertComponent';
+
+
 
 const styles = theme =>({
     stat:{
@@ -35,7 +38,9 @@ const styles = theme =>({
 });
 
 class StatBlock extends React.Component{
-    
+
+    static contextType = AlertContext
+
     constructor(props){
         super(props);
         
@@ -91,7 +96,7 @@ class StatBlock extends React.Component{
             })); 
             this.props.appState.update_Skill_Score();
         }else{
-            this.props.appState.warning_Alert("To Few Stat Points Left!");
+            this.context.alert_On("To Few Stat Points Left!");
         }
     }
 
@@ -102,7 +107,7 @@ class StatBlock extends React.Component{
         }
 
         if(this.state.points_added  >= 7){
-            this.props.appState.warning_Alert("Maximum Bonus Reached!");            
+            this.context.alert_On("Maximum Bonus Reached!");
         }else if((this.state.stat+ 1)>13){
 
            if(this.props.appState.points > 1){
@@ -115,7 +120,7 @@ class StatBlock extends React.Component{
                 this.props.appState.update_Skill_Score();
 
             }else{
-                this.props.appState.warning_Alert("Not Enough Stat Points!");
+                this.context.alert_On("Not Enough Stat Points!");
             }
         }else{
 
@@ -129,7 +134,7 @@ class StatBlock extends React.Component{
                 this.props.appState.update_Skill_Score();
 
             }else{
-                this.props.appState.warning_Alert("Not Enough Stat Points!");
+                this.context.alert_On("Not Enough Stat Points!");
             }
         }
     }

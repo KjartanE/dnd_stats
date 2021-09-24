@@ -3,8 +3,10 @@ import {Snackbar, Box } from '@material-ui/core/';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import { makeStyles } from '@material-ui/core/styles';
+ 
+export const AlertContext = React.createContext();
 
-class AlertComponent extends Component{
+export class AlertProvider extends Component{
   constructor(props){
     super(props);
 
@@ -33,16 +35,15 @@ class AlertComponent extends Component{
   render(){
 
     return(
-      <Box component ='div'>
-        
+      <AlertContext.Provider value={this.state}>
+        {this.props.children}
         <CustomizedSnackbars state={this.state}/>
-          
-      </Box>
+      </AlertContext.Provider>  
     );
   }
 }
-export default AlertComponent;
  
+export const AlertConsumer = AlertContext.Consumer;
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;

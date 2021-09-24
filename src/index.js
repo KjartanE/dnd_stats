@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {createTheme, ThemeProvider} from '@material-ui/core/styles';
+import { AlertProvider } from './Utilities/AlertComponent';
 
 const theme = createTheme({
   "palette": {
@@ -20,8 +21,11 @@ const theme = createTheme({
 
 ReactDOM.render(
   //<React.StrictMode>
+
     <ThemeProvider theme={theme}>
-      <App />
+      <AlertProvider>
+        <App />
+      </AlertProvider>
     </ThemeProvider>,
   //</React.StrictMode>,
   document.getElementById('root')
