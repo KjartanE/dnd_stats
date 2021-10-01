@@ -81,6 +81,7 @@ class App extends Component{
       update_Skills: this.update_Skills,
       update_Class: this.update_Class,
      
+      menu_change: this.menu_change,
     };
 
 
@@ -187,33 +188,12 @@ class App extends Component{
             
           </Grid>
           <Grid item className={classes.raceSection}>
-            <Button variant="contained" color='primary'
-            className={`${classes.root} ${classes.sub_head}`}
-            onClick={() => this.menu_change('race')}>
-              <Box>
-                <h2>Race: {this.state.race_title}</h2> 
-              </Box>
-            </Button>
-
-            {this.state.menu_open === 'race' ? 
-              <>
-              <RaceBlock appState={this.state} ref={this.races}/>
-              </>
-              : 
-              <></>
-            }
             
-            <Button variant="contained" color='primary'
-            className={`${classes.root} ${classes.sub_head}`}
-            onClick={() =>this.menu_change('back')}>
-              <Box >
-                <h2>Background: {this.state.background_title}</h2> 
-              </Box>
-            </Button>
-            {this.state.menu_open === 'back' ? 
-              <BackgroundBlock appState={this.state} ref={this.background}/>
-            : <Box></Box>
-            }
+            <RaceBlock appState={this.state} ref={this.races} />
+            
+            <BackgroundBlock appState={this.state} ref={this.background}/>
+
+            
              <Button variant="contained" color='primary'
             className={`${classes.root} ${classes.sub_head}`}
             onClick={() => this.menu_change('class')}>

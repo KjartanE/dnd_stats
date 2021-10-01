@@ -1,27 +1,37 @@
 import React, { useRef } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
-import { Box } from "@material-ui/core";
+import { Box, Button } from "@material-ui/core";
 import MuiAccordion from "@material-ui/core/Accordion";
 import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
 import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
 import Typography from "@material-ui/core/Typography";
 
-import Dwarf from './Races/Dwarf.js';
-import Elf from './Races/Elf.js';
-import Halfling from './Races/Halfling.js';
-import Human  from './Races/Human.js';
-import Dragonborn  from './Races/Dragonborn.js';
-import Gnome  from './Races/Gnome.js';
+import Dwarf from "./Races/Dwarf.js";
+import Elf from "./Races/Elf.js";
+import Halfling from "./Races/Halfling.js";
+import Human from "./Races/Human.js";
+import Dragonborn from "./Races/Dragonborn.js";
+import Gnome from "./Races/Gnome.js";
 import HalfElf from "./Races/HalfElf.js";
 import HalfOrc from "./Races/HalfOrc.js";
 import Tiefling from "./Races/Tiefling.js";
 
-const style = makeStyles({
-  root: {
-    width: "100%",
-
-    backgroundColor: "green",
-    marginTop: "0",
+const styles = theme =>({
+  root: {    
+    borderRadius: 3,
+    color: 'white',
+    boxShadow: '0 3px 5px 2px #1F2D33',
+    textAlign: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  sub_head: {
+    backgroundColor: theme.palette.primary2Color,
+    marginBottom: '10px',
+    fontSize: 14,
+    height: 60,
+    width:'100%',
   },
 });
 
@@ -68,53 +78,71 @@ const AccordionDetails = withStyles((theme) => ({
   },
 }))(MuiAccordionDetails);
 
-
 class RaceBlock extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      raceData: '',
+      raceData: "",
 
       updateStats: this.updateStats,
       variantHuman: this.props.appState.variant_Human,
       updateRace: this.props.appState.update_Race,
       saveRaceInfo: this.saveRaceInfo,
-      accessRaceInfo: this.accessRaceInfo
+      accessRaceInfo: this.accessRaceInfo,
     };
-
-    
   }
 
   accessRaceInfo = () => {
-    return(this.state.raceData);
-  }
+    return this.state.raceData;
+  };
 
   saveRaceInfo = (raceData) => {
     this.setState({
-      raceData: raceData
+      raceData: raceData,
     });
-  }
+  };
 
   updateStats = (dir1, val1, dir2, val2) => {
     this.props.appState.update_Stats(dir1, val1, dir2, val2);
-  }
+  };
 
   render() {
-    return(
-        <Box component='div' style={{marginBottom:'8px'}}>
-          <CustomizedAccordions 
-          raceState={this.state}
-           />
-        </Box>
-      
-      ); 
+    const { classes } = this.props;
+
+    return (
+      <Box>
+        <Button
+          variant="contained"
+          color="primary"
+          className={`${classes.root} ${classes.sub_head}`}
+          onClick={() => this.props.appState.menu_change("race")}
+        >
+          <Box>
+            <h2>Race: {this.props.appState.race_title}</h2>
+          </Box>
+        </Button>
+        {this.props.appState.menu_open === "race" ? (
+          
+          <Box component="div" style={{ marginBottom: "8px" }}>
+            <CustomizedAccordions raceState={this.state} />
+          </Box>
+          
+        ) : (
+          <></>
+        )}
+
+        
+      </Box>
+    );
   }
 }
-export default RaceBlock;
+
+
+export default withStyles(styles, {withTheme: true})(RaceBlock);
 
 export function CustomizedAccordions(props) {
-  const classes = style();
+  //const classes = style();
 
   const [expanded, setExpanded] = React.useState("panel1");
   const handleChange = (panel) => (event, newExpanded) => {
@@ -122,7 +150,8 @@ export function CustomizedAccordions(props) {
   };
 
   return (
-    <Box className={classes.root}>
+    //className={classes.root}
+    <Box >
       <Accordion
         square
         expanded={expanded === "panel1"}
@@ -144,7 +173,7 @@ export function CustomizedAccordions(props) {
           <Typography>Elf</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Elf raceState={props.raceState}/>
+          <Elf raceState={props.raceState} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -156,7 +185,7 @@ export function CustomizedAccordions(props) {
           <Typography>Halfing</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Halfling raceState={props.raceState}/>
+          <Halfling raceState={props.raceState} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -168,7 +197,7 @@ export function CustomizedAccordions(props) {
           <Typography>Human</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Human raceState={props.raceState}/>
+          <Human raceState={props.raceState} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -180,7 +209,7 @@ export function CustomizedAccordions(props) {
           <Typography>Dragonborn</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Dragonborn raceState={props.raceState}/>
+          <Dragonborn raceState={props.raceState} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -192,7 +221,7 @@ export function CustomizedAccordions(props) {
           <Typography>Gnome</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Gnome raceState={props.raceState}/>
+          <Gnome raceState={props.raceState} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -204,7 +233,7 @@ export function CustomizedAccordions(props) {
           <Typography>Half-Elf</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <HalfElf raceState={props.raceState}/>
+          <HalfElf raceState={props.raceState} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -216,7 +245,7 @@ export function CustomizedAccordions(props) {
           <Typography>Half-Orc</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <HalfOrc raceState={props.raceState}/>
+          <HalfOrc raceState={props.raceState} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -228,7 +257,7 @@ export function CustomizedAccordions(props) {
           <Typography>Tiefling</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Tiefling raceState={props.raceState}/>
+          <Tiefling raceState={props.raceState} />
         </AccordionDetails>
       </Accordion>
     </Box>

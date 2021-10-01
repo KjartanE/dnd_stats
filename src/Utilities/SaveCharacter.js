@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Box, Button } from "@material-ui/core/";
 
 /*
-import { exportDwarf } from "../RaceBlock/Races/Dwarf";
 import { exportDragonborn } from "../RaceBlock/Races/Dragonborn";
 import { exportElf } from "../RaceBlock/Races/Elf";
 import { exportGnome } from "../RaceBlock/Races/Gnome";
@@ -11,6 +10,8 @@ import { exportHalfling } from "../RaceBlock/Races/Halfling";
 import { exportHalfOrc } from "../RaceBlock/Races/HalfOrc";
 import { exportHuman } from "../RaceBlock/Races/Human";
 */
+import { exportDwarf } from "../RaceBlock/Races/Dwarf";
+
 import { exportTiefling } from "../RaceBlock/Races/Tiefling";
 
 export default class SaveCharacter extends Component {
@@ -172,7 +173,7 @@ export default class SaveCharacter extends Component {
   };
 
   testShit = () => {
-    return <Box>{exportTiefling(this.state.Race.sub)}</Box>;
+    return <Box>{exportDwarf(this.state.Race.sub)}</Box>;
   };
 
   render() {
