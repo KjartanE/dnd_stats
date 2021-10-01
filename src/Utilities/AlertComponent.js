@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Snackbar, Box } from '@material-ui/core/';
+import {Snackbar} from '@material-ui/core/';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 export function CustomizedSnackbars(props) {
   const classes = useStyles();
 
-  const handleClose = (event, reason) => {
+  const handleClose = ( reason) => {
     if (reason === 'clickaway') {
       return;
     }

@@ -57,8 +57,9 @@ class SkillBlock extends React.Component {
         during: false,
         count: 0,
         class: "",
-        classSkill1: "",
-        classSkill2: "",
+        classSkills:[
+          
+        ]
       },
 
       disabled_iter: [
@@ -210,15 +211,29 @@ class SkillBlock extends React.Component {
 
   update_Skill = (skill, val) => {
     //console.log(JSON.stringify(this.state.class_Selected));
+    console.log(this.state.class_Selected.classSkills.indexOf(skill));
+
+    if (
+      this.state.background_Selected.background1 !== skill &&
+      this.state.background_Selected.background2 !== skill &&
+      this.state.class_Selected.classSkills.indexOf(skill) < 0
+    ) {
+      this.setState((state) => ({
+        [skill]: !this.state[skill],
+      }));
+      this.state.adjust_Prof(val);
+    } else {
+      this.context.alert_On("Cannot Remove Class or Background Skill");
+    }
+
 
     if (this.state.class_Selected.during === true && val === -1) {
       var class_Selected = { ...this.state.class_Selected };
-      if (this.state.class_Selected.count === 2) {
-        class_Selected.classSkill1 = skill;
+      
+      class_Selected.classSkills.push(skill);
+      class_Selected.count -= 1;
 
-        class_Selected.count = 1;
-      } else if (this.state.class_Selected.count === 1) {
-        class_Selected.classSkill2 = skill;
+      if (this.state.class_Selected.count === 1) {
         class_Selected.during = false;
         class_Selected.count = 0;
         this.state.disable_Disable();
@@ -229,21 +244,7 @@ class SkillBlock extends React.Component {
       });
     }
 
-    if (
-      this.state.background_Selected.background1 !== skill &&
-      this.state.background_Selected.background2 !== skill &&
-      this.state.class_Selected.classSkill1 !== skill &&
-      this.state.class_Selected.classSkill2 !== skill
-    ) {
-      this.setState((state) => ({
-        [skill]: !this.state[skill],
-      }));
-      this.state.adjust_Prof(val);
-    } else {
-      this.context.alert_On("Cannot Remove Class or Background Skill");
-    }
-
-    //console.log(JSON.stringify(this.state.background_Selected));
+    console.log(JSON.stringify(this.state.class_Selected));
   };
 
   update_Class = (className, availableSkills) => {
@@ -251,16 +252,29 @@ class SkillBlock extends React.Component {
     var disabled = { ...this.state.disabled };
 
     if (this.state.class_Selected.classSkill1 !== "") {
-      this.setState((state) => ({
-        [this.state.class_Selected.classSkill1]: false,
-        [this.state.class_Selected.classSkill2]: false,
-      }));
-
-      class_Selected.classSkill1 = "";
-      class_Selected.classSkill2 = "";
+      for (let x = 0; x < class_Selected.classSkills.length; x++) {
+        const skill = class_Selected.classSkills[x];
+        this.setState((state) => ({
+          [skill]: false,
+        }));
+      }
+      class_Selected.classSkills = [];
     }
 
-    this.adjust_Prof(2);
+    var points = 0;
+    switch (className) {
+      case "Bard":
+      case "Ranger":
+        points = 3;
+        break;
+      case "Rogue":
+        points = 4;
+        break;
+      default:
+        points = 2;
+        break;
+    }
+    this.adjust_Prof(points);
 
     for (let i = 0; i < this.state.disabled_iter.length; i++) {
       const element = this.state.disabled_iter[i];
@@ -276,7 +290,7 @@ class SkillBlock extends React.Component {
     }
 
     class_Selected.during = true;
-    class_Selected.count = 2;
+    class_Selected.count = points;
     class_Selected.class = className;
 
     this.setState({

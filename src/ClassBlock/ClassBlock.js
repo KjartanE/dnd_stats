@@ -4,6 +4,19 @@ import {Box, Card, Grid, Popover,
     CardActionArea, CardMedia, CardContent, Typography} from '@material-ui/core';
 
 import Artificer from './ClassItems/Artificer';
+import Barbarian from './ClassItems/Barbarian';
+import Bard from './ClassItems/Bard';
+import Cleric from './ClassItems/Cleric';
+import Druid from './ClassItems/Druid';
+import Fighter from './ClassItems/Fighter';
+import Monk from './ClassItems/Monk';
+import Paladin from './ClassItems/Paladin';
+import Ranger from './ClassItems/Ranger';
+import Rogue from './ClassItems/Rogue';
+import Sorcerer from './ClassItems/Sorcerer';
+import Warlock from './ClassItems/Warlock';
+import Wizard from './ClassItems/Wizard';
+
 
 const styles = theme => ({
     classBox:{
@@ -39,6 +52,14 @@ class ClassBlock extends React.Component{
             Bard: false,
             Cleric: false,
             Druid: false,
+            Fighter: false,
+            Monk: false,
+            Paladin: false,
+            Ranger: false,
+            Rogue: false,
+            Sorcerer: false,
+            Warlock: false,
+            Wizard: false,
 
             PopoverHandler: this.PopoverHandler,
             update_Class: this.update_Class
@@ -61,25 +82,159 @@ class ClassBlock extends React.Component{
 
         return (
           <Box className={classes.classBox}>
-            <Grid container direction="row" spacing={2} 
-            justifyContent="center" alignItems="flex-start">
-
-                <Grid item>
-                    <ClassBlockItem class="Artificer" state={this.state}/>
-                </Grid>
-                <Grid item>
-                    <ClassBlockItem class="Barbarian" state={this.state}/>
-                </Grid>
-                <Grid item>
-                    <ClassBlockItem class="Bard" state={this.state}/>
-                </Grid>
-                <Grid item>
-                    <ClassBlockItem class="Cleric" state={this.state}/>
-                </Grid>
-                <Grid item>
-                    <ClassBlockItem class="Druid" state={this.state}/>
-                </Grid>
+            <Grid
+              container
+              direction="row"
+              spacing={2}
+              justifyContent="center"
+              alignItems="flex-start"
+            >
+              <Grid item>
+                <ClassBlockItem class="Artificer" state={this.state} />
+              </Grid>
+              <Grid item>
+                <ClassBlockItem class="Barbarian" state={this.state} />
+              </Grid>
+              <Grid item>
+                <ClassBlockItem class="Bard" state={this.state} />
+              </Grid>
+              <Grid item>
+                <ClassBlockItem class="Cleric" state={this.state} />
+              </Grid>
+              <Grid item>
+                <ClassBlockItem class="Druid" state={this.state} />
+              </Grid>
+              <Grid item>
+                <ClassBlockItem class="Fighter" state={this.state} />
+              </Grid>
+              <Grid item>
+                <ClassBlockItem class="Monk" state={this.state} />
+              </Grid>
+              <Grid item>
+                <ClassBlockItem class="Paladin" state={this.state} />
+              </Grid>
+              <Grid item>
+                <ClassBlockItem class="Ranger" state={this.state} />
+              </Grid>
+              <Grid item>
+                <ClassBlockItem class="Rogue" state={this.state} />
+              </Grid>
+              <Grid item>
+                <ClassBlockItem class="Sorcerer" state={this.state} />
+              </Grid>
+              <Grid item>
+                <ClassBlockItem class="Warlock" state={this.state} />
+              </Grid>
+              <Grid item>
+                <ClassBlockItem class="Wizard" state={this.state} />
+              </Grid>
             </Grid>
+
+            <Popover
+              open={this.state.Artificer}
+              anchorReference="anchorPosition"
+              anchorPosition={{ top: 200, left: 400 }}
+              onClose={() => this.state.PopoverHandler("Artificer")}
+            >
+              <Artificer state={this.state} />
+            </Popover>
+            <Popover
+              open={this.state.Barbarian}
+              anchorReference="anchorPosition"
+              anchorPosition={{ top: 200, left: 400 }}
+              onClose={() => this.state.PopoverHandler("Barbarian")}
+            >
+              <Barbarian state={this.state} />
+            </Popover>
+            <Popover
+              open={this.state.Bard}
+              anchorReference="anchorPosition"
+              anchorPosition={{ top: 200, left: 400 }}
+              onClose={() => this.state.PopoverHandler("Bard")}
+            >
+              <Bard state={this.state} />
+            </Popover>
+            <Popover
+              open={this.state.Cleric}
+              anchorReference="anchorPosition"
+              anchorPosition={{ top: 200, left: 400 }}
+              onClose={() => this.state.PopoverHandler("Cleric")}
+            >
+              <Cleric state={this.state} />
+            </Popover>
+            <Popover
+              open={this.state.Druid}
+              anchorReference="anchorPosition"
+              anchorPosition={{ top: 200, left: 400 }}
+              onClose={() => this.state.PopoverHandler("Druid")}
+            >
+              <Druid state={this.state} />
+            </Popover>
+            <Popover
+              open={this.state.Fighter}
+              anchorReference="anchorPosition"
+              anchorPosition={{ top: 200, left: 400 }}
+              onClose={() => this.state.PopoverHandler("Fighter")}
+            >
+              <Fighter state={this.state} />
+            </Popover>
+            <Popover
+              open={this.state.Monk}
+              anchorReference="anchorPosition"
+              anchorPosition={{ top: 200, left: 400 }}
+              onClose={() => this.state.PopoverHandler("Monk")}
+            >
+              <Monk state={this.state} />
+            </Popover>
+            <Popover
+              open={this.state.Paladin}
+              anchorReference="anchorPosition"
+              anchorPosition={{ top: 200, left: 400 }}
+              onClose={() => this.state.PopoverHandler("Paladin")}
+            >
+              <Paladin state={this.state} />
+            </Popover>
+            <Popover
+              open={this.state.Ranger}
+              anchorReference="anchorPosition"
+              anchorPosition={{ top: 200, left: 400 }}
+              onClose={() => this.state.PopoverHandler("Ranger")}
+            >
+              <Ranger state={this.state} />
+            </Popover>
+            <Popover
+              open={this.state.Rogue}
+              anchorReference="anchorPosition"
+              anchorPosition={{ top: 200, left: 400 }}
+              onClose={() => this.state.PopoverHandler("Rogue")}
+            >
+              <Rogue state={this.state} />
+            </Popover>
+            <Popover
+              open={this.state.Sorcerer}
+              anchorReference="anchorPosition"
+              anchorPosition={{ top: 200, left: 400 }}
+              onClose={() => this.state.PopoverHandler("Sorcerer")}
+            >
+              <Sorcerer state={this.state} />
+            </Popover>
+            <Popover
+              open={this.state.Warlock}
+              anchorReference="anchorPosition"
+              anchorPosition={{ top: 200, left: 400 }}
+              onClose={() => this.state.PopoverHandler("Warlock")}
+            >
+              <Warlock state={this.state} />
+            </Popover>
+            <Popover
+              open={this.state.Wizard}
+              anchorReference="anchorPosition"
+              anchorPosition={{ top: 200, left: 400 }}
+              onClose={() => this.state.PopoverHandler("Wizard")}
+            >
+              <Wizard state={this.state} />
+            </Popover>
+
           </Box>
         );
     }
@@ -106,25 +261,7 @@ export function ClassBlockItem(props){
             </CardContent>
           </CardActionArea>
         </Card>
-
-        <Popover open={props.state.Artificer} 
-        anchorReference="anchorPosition"
-        anchorPosition={{ top: 200, left: 400 }}
-        onClose={() => props.state.PopoverHandler('Artificer')}>
-        <Artificer state={props.state}/>
-        </Popover>
-        <Popover open={props.state.Barbarian} 
-        onClose={() => props.state.PopoverHandler('Barbarian')}>
-        Barbarian
-        </Popover>
-        <Popover open={props.state.Bard} 
-        onClose={() => props.state.PopoverHandler('Bard')}>
-        Bard
-        </Popover>
-        <Popover open={props.state.Cleric} 
-        onClose={() => props.state.PopoverHandler('Cleric')}>
-        Cleric
-        </Popover>
+      
       </Box>
 
     );

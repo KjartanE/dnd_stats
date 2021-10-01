@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import { Box } from "@material-ui/core";
 import MuiAccordion from "@material-ui/core/Accordion";
@@ -74,8 +74,26 @@ class RaceBlock extends React.Component {
     super(props);
 
     this.state = {
-        updateStats: this.updateStats
+      raceData: '',
+
+      updateStats: this.updateStats,
+      variantHuman: this.props.appState.variant_Human,
+      updateRace: this.props.appState.update_Race,
+      saveRaceInfo: this.saveRaceInfo,
+      accessRaceInfo: this.accessRaceInfo
     };
+
+    
+  }
+
+  accessRaceInfo = () => {
+    return(this.state.raceData);
+  }
+
+  saveRaceInfo = (raceData) => {
+    this.setState({
+      raceData: raceData
+    });
   }
 
   updateStats = (dir1, val1, dir2, val2) => {
@@ -86,9 +104,7 @@ class RaceBlock extends React.Component {
     return(
         <Box component='div' style={{marginBottom:'8px'}}>
           <CustomizedAccordions 
-          updateStats={this.state.updateStats} 
-          variantHuman={this.props.appState.variant_Human}
-          updateRace={this.props.appState.update_Race}
+          raceState={this.state}
            />
         </Box>
       
@@ -99,7 +115,6 @@ export default RaceBlock;
 
 export function CustomizedAccordions(props) {
   const classes = style();
-  
 
   const [expanded, setExpanded] = React.useState("panel1");
   const handleChange = (panel) => (event, newExpanded) => {
@@ -117,7 +132,7 @@ export function CustomizedAccordions(props) {
           <Typography>Dwarf</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Dwarf updateStats={props.updateStats} updateRace={props.updateRace}/>
+          <Dwarf raceState={props.raceState} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -129,7 +144,7 @@ export function CustomizedAccordions(props) {
           <Typography>Elf</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Elf updateStats={props.updateStats} updateRace={props.updateRace}/>
+            <Elf raceState={props.raceState}/>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -141,7 +156,7 @@ export function CustomizedAccordions(props) {
           <Typography>Halfing</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Halfling updateStats={props.updateStats} updateRace={props.updateRace}/>
+            <Halfling raceState={props.raceState}/>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -153,7 +168,7 @@ export function CustomizedAccordions(props) {
           <Typography>Human</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Human variantHuman={props.variantHuman} updateRace={props.updateRace}/>
+            <Human raceState={props.raceState}/>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -165,7 +180,7 @@ export function CustomizedAccordions(props) {
           <Typography>Dragonborn</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Dragonborn updateStats={props.updateStats} updateRace={props.updateRace}/>
+            <Dragonborn raceState={props.raceState}/>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -177,7 +192,7 @@ export function CustomizedAccordions(props) {
           <Typography>Gnome</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Gnome updateStats={props.updateStats} updateRace={props.updateRace}/>
+            <Gnome raceState={props.raceState}/>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -189,7 +204,7 @@ export function CustomizedAccordions(props) {
           <Typography>Half-Elf</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <HalfElf variantHuman={props.variantHuman} updateRace={props.updateRace}/>
+            <HalfElf raceState={props.raceState}/>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -201,7 +216,7 @@ export function CustomizedAccordions(props) {
           <Typography>Half-Orc</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <HalfOrc updateStats={props.updateStats} updateRace={props.updateRace}/>
+            <HalfOrc raceState={props.raceState}/>
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -213,7 +228,7 @@ export function CustomizedAccordions(props) {
           <Typography>Tiefling</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Tiefling updateStats={props.updateStats} updateRace={props.updateRace}/>
+            <Tiefling raceState={props.raceState}/>
         </AccordionDetails>
       </Accordion>
     </Box>

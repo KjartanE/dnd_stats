@@ -25,60 +25,82 @@ const style = makeStyles({
   },
 });
 
-class Halfling extends React.Component {
-  render() {
-    return <HalflingBlock updateStats={this.props.updateStats} 
-    updateRace={this.props.updateRace}
-    />
+var raceInfo = (
+  <>
+    <strong>Stat Bonus. +2 DEX</strong>
+    <br />
+    <strong>Size. Small | Speed. 25 ft</strong>
+    <br />
+    <strong>Lucky.</strong> You may reroll 1’s on attack rolls, ability checks,
+    or saving throws. Must use the new roll.
+    <br />
+    <strong>Brave.</strong> You have advantage on saving throws against being
+    frightened.
+    <br />
+    <strong>Halfling Nimbleness.</strong> You may move through the space of any
+    creature that is a size larger than yours.
+    <br />
+  </>
+);
+
+function subHalfing(sub) {
+  var subRace = "";
+  var subInfo = "";
+
+  switch (sub) {
+    case "Lightfoot":
+      subRace = "Naturally Stealthy. ";
+      subInfo =
+        "You can attempt to hide even when obscured only by a creature at least 1 size larger than you.";
+      break;
+    case "Stout":
+      subRace = "Stout Resilience. ";
+      subInfo =
+        "Advantage on saving throws against poison. Resistance against poison damage";
+      break;
+    case "Ghostwise":
+      subRace = "Silent Speech. ";
+      subInfo =
+        "You can speak telepathically to any creature within 30 ft. Must share a language for it to understand you. One creature at a time. ";
+      break;
+
+    default:
+      break;
   }
+
+  return (
+    <>
+      <strong>{subRace}</strong>
+      {subInfo}
+    </>
+  );
 }
-export default Halfling;
 
-export function HalflingBlock(props) {
+export function exportHalfling(sub) {
+  return (
+    <>
+      {raceInfo}
+      {subHalfing(sub)}
+    </>
+  );
+}
+
+export default function Halfling(props) {
   const classes = style();
-  const [halfing, setHalfing] = useState('');
+  const [halfing, setHalfing] = useState("");
 
+  const saveRaceInfo = (sub) => {
+    var raceData = new Object({
+      title: "Halfing",
+      sub: sub,
+    });
+    return raceData;
+  };
 
   return (
     <Grid container direction="row">
       <Box component="div" className={classes.raceInfo}>
-        <Typography>
-          <strong>Stat Bonus. +2 DEX</strong>
-          <br />
-          <strong>Size. Small | Speed. 25 ft</strong>
-          <br />
-          <strong>Lucky.</strong> You may reroll 1’s on attack rolls, ability
-          checks, or saving throws. Must use the new roll.
-          <br />
-          <strong>Brave.</strong> You have advantage on saving throws against
-          being frightened.
-          <br />
-          <strong>Halfling Nimbleness.</strong> You may move through the space
-          of any creature that is a size larger than yours.
-          <br />
-          {halfing === "lightfoot" ? (
-            <>
-              <strong>Naturally Stealthy.</strong> You can attempt to hide even
-              when obscured only by a creature at least 1 size larger than you.{" "}
-              <br />
-            </>
-          ) : halfing === "stout" ? (
-            <>
-              <strong>Stout Resilience. </strong>
-              Advantage on saving throws against poison. Resistance against
-              poison damage
-              <br />
-            </>
-          ) : halfing === "ghostwise" ? (
-            <>
-              <strong>Silent Speech.</strong> You can speak telepathically to
-              any creature within 30 ft. Must share a language for it to
-              understand you. One creature at a time. <br />
-            </>
-          ) : (
-            <></>
-          )}
-        </Typography>
+        <Typography>{exportHalfling(halfing)}</Typography>
       </Box>
       <Box component="div" className={classes.raceButtons}>
         <ButtonGroup
@@ -92,9 +114,10 @@ export function HalflingBlock(props) {
             className={classes.button}
             type="button"
             onClick={() => {
-              props.updateStats("dex", +2, "cha", +1);
-              props.updateRace("Lightfoot Halfling");
-              setHalfing("lightfoot");
+              setHalfing("Lightfoot");
+              props.raceState.updateStats("dex", +2, "cha", +1);
+              props.raceState.updateRace("Lightfoot Halfling");
+              props.raceState.saveRaceInfo(saveRaceInfo("Lightfoot"));
             }}
           >
             Lightfoot Halfling <br />
@@ -104,9 +127,10 @@ export function HalflingBlock(props) {
             className={classes.button}
             type="button"
             onClick={() => {
-              props.updateStats("dex", +2, "con", +1);
-              props.updateRace("Stout Halfling");
-              setHalfing("stout");
+              setHalfing("Stout");
+              props.raceState.updateStats("dex", +2, "con", +1);
+              props.raceState.updateRace("Stout Halfling");
+              props.raceState.saveRaceInfo(saveRaceInfo("Stout"));
             }}
           >
             Stout Halfling <br />
@@ -116,9 +140,10 @@ export function HalflingBlock(props) {
             className={classes.button}
             type="button"
             onClick={() => {
-              props.updateStats("dex", +2, "wis", +1);
-              props.updateRace("Ghostwise Halfling");
-              setHalfing("ghostwise");
+              setHalfing("Ghostwise");
+              props.raceState.updateStats("dex", +2, "wis", +1);
+              props.raceState.updateRace("Ghostwise Halfling");
+              props.raceState.saveRaceInfo(saveRaceInfo("Ghostwise"));
             }}
           >
             Ghostwise Halfling <br />
@@ -129,88 +154,3 @@ export function HalflingBlock(props) {
     </Grid>
   );
 }
-
-/*
-<Box component="div" className={classes.raceInfo}>
-            <Typography>
-              <strong>Stat Bonus. +2 DEX</strong>
-              <br />
-              <strong>Size. Small | Speed. 25 ft</strong>
-              <br />
-              <strong>Lucky.</strong> You may reroll 1’s on attack rolls,
-              ability checks, or saving throws. Must use the new roll.
-              <br />
-              <strong>Brave.</strong> You have advantage on saving throws
-              against being frightened.
-              <br />
-              <strong>Halfling Nimbleness.</strong> You may move through the
-              space of any creature that is a size larger than yours.
-              <br />
-              {halfing === "lightfoot" ? (
-                <Box component="div">
-                  <strong>Naturally Stealthy.</strong> You can attempt to hide
-                  even when obscured only by a creature at least 1 size larger
-                  than you. <br />
-                </Box>
-              ) : halfing === "stout" ? (
-                <Box component="div">
-                  <strong>Stout Resilience. </strong>
-                  Advantage on saving throws against poison. Resistance against
-                  poison damage
-                  <br />
-                </Box>
-              ) : halfing === "ghostwise" ? (
-                <Box component="div">
-                  <strong>Silent Speech.</strong> You can speak telepathically
-                  to any creature within 30 ft. Must share a language for it to
-                  understand you. One creature at a time. <br />
-                </Box>
-              ) : (
-                <Box></Box>
-              )}
-            </Typography>
-          </Box>
-          <Box component="div" className={classes.raceButtons}>
-            <ButtonGroup
-              className={classes.buttonGroup}
-              orientation="vertical"
-              size="small"
-              color="primary"
-              variant="contained"
-            >
-              <Button
-                className={classes.button}
-                type="button"
-                onClick={() => {
-                  props.updateStats("dex", +2, "cha", +1);
-                  setHalfing("lightfoot");
-                }}
-              >
-                Lightfoot Halfling <br />
-                +1 CHA
-              </Button>
-              <Button
-                className={classes.button}
-                type="button"
-                onClick={() => {
-                  props.updateStats("dex", +2, "con", +1);
-                  setHalfing("stout");
-                }}
-              >
-                Stout Halfling <br />
-                +1 CON
-              </Button>
-              <Button
-                className={classes.button}
-                type="button"
-                onClick={() => {
-                  props.updateStats("dex", +2, "wis", +1);
-                  setHalfing("ghostwise");
-                }}
-              >
-                Ghostwise Halfling <br />
-                +1 WIS
-              </Button>
-            </ButtonGroup>
-          </Box>
-  */

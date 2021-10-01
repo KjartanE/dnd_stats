@@ -5,7 +5,7 @@ import BackgroundBlock from './BackgroundBlock/BackgroundBlock.js';
 import SkillBlock from './SkillBlock/SkillBlock';
 import RaceBlock from './RaceBlock/RaceBlock.js';
 import ClassBlock from './ClassBlock/ClassBlock.js';
-import {AlertProvider} from './Utilities/AlertComponent';
+import SaveCharacter from './Utilities/SaveCharacter';
 
 import { withStyles } from '@material-ui/core/styles';
 import { Box, Button, Container, Grid } from '@material-ui/core';
@@ -52,16 +52,25 @@ class App extends Component{
   constructor(){
     super();
     
-    this.state={
-      points: "27",
+    
+    this.stats = React.createRef();
+    this.skills = React.createRef();
+    this.races = React.createRef();
+    this.background = React.createRef();
+    this.alert = React.createRef();
 
+    this.state={
       menu_open: "",
 
       race_title: "",
       background_title: "",
       class_title: "",
-  
-      
+
+      stats: this.stats,
+      skills: this.skills,
+      races: this.races,
+      background: this.background,
+
       variant_Human: this.variant_Human,
       update_Stats:this.update_Stats,
       update_Stat_Points: this.update_Stat_Points,
@@ -75,9 +84,6 @@ class App extends Component{
     };
 
 
-    this.stats = React.createRef();
-    this.skills = React.createRef();
-    this.alert = React.createRef();
   }
 
   update_Stat_Points = (val) => {
@@ -152,6 +158,9 @@ class App extends Component{
     }
   }
 
+ 
+
+
   render() {
     const { classes } = this.props;
 
@@ -165,9 +174,6 @@ class App extends Component{
         <Grid container direction="row" spacing={3} justifyContent="flex-start" alignItems="flex-start">
           
           <Grid item className={classes.statColumn}>
-            <Box className={`${classes.root} ${classes.sub_head}`}>      
-              <h2>Stat Points: {this.state.points}</h2>
-            </Box>
             <StatsRouter appState={this.state} ref={this.stats} />
           </Grid>
           
@@ -176,20 +182,25 @@ class App extends Component{
               <h2>Skills:</h2>
             </Box>
             <SkillBlock appState={this.state} ref={this.skills}/>
+            <br/>
+            <SaveCharacter appState={this.state}/>
             
           </Grid>
           <Grid item className={classes.raceSection}>
             <Button variant="contained" color='primary'
             className={`${classes.root} ${classes.sub_head}`}
             onClick={() => this.menu_change('race')}>
-              <Box >
+              <Box>
                 <h2>Race: {this.state.race_title}</h2> 
               </Box>
             </Button>
 
             {this.state.menu_open === 'race' ? 
-              <RaceBlock appState={this.state}/>
-            : <Box></Box>
+              <>
+              <RaceBlock appState={this.state} ref={this.races}/>
+              </>
+              : 
+              <></>
             }
             
             <Button variant="contained" color='primary'
@@ -197,11 +208,10 @@ class App extends Component{
             onClick={() =>this.menu_change('back')}>
               <Box >
                 <h2>Background: {this.state.background_title}</h2> 
-
               </Box>
             </Button>
             {this.state.menu_open === 'back' ? 
-              <BackgroundBlock appState={this.state}/>
+              <BackgroundBlock appState={this.state} ref={this.background}/>
             : <Box></Box>
             }
              <Button variant="contained" color='primary'

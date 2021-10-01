@@ -46,11 +46,22 @@ class StatBlock extends React.Component{
         
         this.state={
             stat : 8,
+            race_stat : 0,
             score : -1,
             points_added: 0,
+
+            accessData: this.accessData,
         };
         
     }  
+    accessData = () =>{
+        var data = new Object({
+            stat: this.state.stat,
+            race_stat : this.state.race_stat,
+            score : this.state.score,
+        });
+        return data;
+    }
 
     accessScore = () => {
         return this.state.score; 
@@ -67,13 +78,11 @@ class StatBlock extends React.Component{
         }));
     }
 
-    raceStatPoints = () =>{
-        
-        this.props.appState.adjust_Race_Points(-1, this.props.stat);            
+    raceStatPoints = (val) =>{
+         
         this.setState((state) => ({
-            stat: state.stat + 1,
-            score: this.modCalc(state.stat + 1),
-            points_added: state.points_added 
+            race_stat: state.race_stat + val,
+            score: this.modCalc(state.stat + state.race_stat + val), 
         }));
 
         this.props.appState.update_Skill_Score();
@@ -91,7 +100,7 @@ class StatBlock extends React.Component{
 
             this.setState((state) => ({
                 stat: state.stat -1,
-                score: this.modCalc(state.stat -1),
+                score: this.modCalc(state.stat + state.race_stat - 1),
                 points_added: state.points_added -1,
             })); 
             this.props.appState.update_Skill_Score();
@@ -102,7 +111,8 @@ class StatBlock extends React.Component{
 
     increasePoints = () =>{
         if (this.props.appState.race_points >0) {
-            this.raceStatPoints();
+            this.raceStatPoints(1);
+            this.props.appState.adjust_Race_Points(-1, this.props.stat); 
             return;
         }
 
@@ -114,7 +124,7 @@ class StatBlock extends React.Component{
                 this.props.appState.adjust_Points(-2); 
                 this.setState((state) => ({
                     stat: state.stat + 1,
-                    score: this.modCalc(state.stat + 1),
+                    score: this.modCalc(state.stat + state.race_stat + 1),
                     points_added: state.points_added +1
                 }));            
                 this.props.appState.update_Skill_Score();
@@ -128,7 +138,7 @@ class StatBlock extends React.Component{
                 this.props.appState.adjust_Points(-1);            
                 this.setState((state) => ({
                     stat: state.stat + 1,
-                    score: this.modCalc(state.stat + 1),
+                    score: this.modCalc(state.stat + state.race_stat + 1),
                     points_added: state.points_added +1
                 }));
                 this.props.appState.update_Skill_Score();
@@ -153,6 +163,7 @@ class StatBlock extends React.Component{
             </ButtonGroup>
             <br/>
             Points: {this.state.stat}
+            {this.state.race_stat>0 ? "+" +this.state.race_stat: ''}
             <br/>
             Score: 
             <Box className={classes.score}>
